@@ -9,8 +9,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.douzone.mysite.vo.GuestbookVo;
+import com.douzone.mysite.vo.UserVo;
 
-public class GuestbookDao {
+public class UserDao {
 	
 	public Boolean deleteByNoAndPassword(Long no, String password) {
 		boolean result = false;
@@ -21,7 +22,7 @@ public class GuestbookDao {
 		try {
 			conn = getConnection();
 			
-			String sql = "delete from guestbook where no = ? and password = ?";
+			String sql = "delete from user where no = ? and password = ?";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setLong(1, no);
 			pstmt.setString(2, password);
@@ -48,7 +49,7 @@ public class GuestbookDao {
 		return result;		
 	}
 	
-	public Boolean insert(GuestbookVo vo) {
+	public Boolean insert(UserVo vo) {
 		boolean result = false;
 		
 		Connection conn = null;
@@ -57,11 +58,12 @@ public class GuestbookDao {
 		try {
 			conn = getConnection();
 			
-			String sql = "insert into guestbook values(null, ?, ?, ?, now())";
+			String sql = "INSERT INTO user VALUES(null, ?, ?, ?, ?, now())";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getName());
-			pstmt.setString(2, vo.getPassword());
-			pstmt.setString(3, vo.getMessage());
+			pstmt.setString(2, vo.getEmail());
+			pstmt.setString(3, vo.getPassword());
+			pstmt.setString(4, vo.getGender());			
 			
 			int count = pstmt.executeUpdate();
 			
@@ -83,7 +85,7 @@ public class GuestbookDao {
 				e.printStackTrace();
 			}
 		}
-		
+		System.out.println("========== INSERT 완료! ==========");
 		return result;
 	}
 	
