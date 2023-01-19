@@ -8,6 +8,11 @@ insert INTO emaillist VALUES(null, '윤', '한영', 'dbsgksdud@test.com');
 SELECT * FROM user;
 insert INTO user VALUES(null, '윤한영', 'dbsgksdud@test.com', password('1234'), 'male', now());
 
+-- UPDATE
+UPDATE user
+SET name = '둘리', gender = 'female'
+WHERE no = 1;
+
 -- login
 SELECT * FROM user WHERE email = 'dbsgksdud@test.com' AND password = password('1234');
 
