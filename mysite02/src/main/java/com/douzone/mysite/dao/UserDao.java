@@ -49,8 +49,7 @@ public class UserDao {
 		return result;		
 	}
 	
-	public Boolean insert(UserVo vo) {
-		boolean result = false;
+	public void insert(UserVo vo) {
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
@@ -65,10 +64,8 @@ public class UserDao {
 			pstmt.setString(3, vo.getPassword());
 			pstmt.setString(4, vo.getGender());			
 			
-			int count = pstmt.executeUpdate();
-			
-			//5. 결과 처리
-			result = count == 1;
+			pstmt.executeUpdate();
+
 			
 		} catch (SQLException e) {
 			System.out.println("Error:" + e);
@@ -86,7 +83,6 @@ public class UserDao {
 			}
 		}
 		System.out.println("========== INSERT 완료! ==========");
-		return result;
 	}
 	
 	public List<GuestbookVo> findAll() {

@@ -14,7 +14,7 @@ public class GuestActionFactory extends ActionFactory {
 		if("list".equals(actionName)) {
 			action = new GuestFormAction();
 		} else if("guestCreate".equals(actionName)) {
-			action = new GuestAction();
+			action = new AddGuestAction();
 		} else if("deleteform".equals(actionName)) {
 			action = new GuestDeleteFormAction();
 		} else if("delete".equals(actionName)) {

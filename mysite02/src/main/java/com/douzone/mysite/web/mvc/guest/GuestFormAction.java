@@ -10,7 +10,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.douzone.mysite.dao.GuestbookDao;
 import com.douzone.mysite.vo.GuestbookVo;
 import com.douzone.web.mvc.Action;
-import com.douzone.web.util.WebUtil;
+import com.douzone.web.util.MvcUtil;
 
 public class GuestFormAction implements Action {
 	
@@ -20,7 +20,7 @@ public class GuestFormAction implements Action {
 		
 		request.setAttribute("list", list);
 		
-		WebUtil.forward("guestbook/list", request, response);
+		MvcUtil.forward("guestbook/list", request, response);
 	}
 
 }
