@@ -4,9 +4,12 @@ SELECT * FROM emaillist;
 DESC emaillist;
 insert INTO emaillist VALUES(null, '윤', '한영', 'dbsgksdud@test.com');
 
-
+-- join
 SELECT * FROM user;
-insert INTO user VALUES(null, '윤한영', 'dbsgksdud@test.com', '1234', 'male', now());
+insert INTO user VALUES(null, '윤한영', 'dbsgksdud@test.com', password('1234'), 'male', now());
+
+-- login
+SELECT * FROM user WHERE email = 'dbsgksdud@test.com' AND password = password('1234');
 
 SELECT * FROM guestbook;
 DESC guestbook;

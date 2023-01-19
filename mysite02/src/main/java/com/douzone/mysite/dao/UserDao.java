@@ -57,7 +57,7 @@ public class UserDao {
 		try {
 			conn = getConnection();
 			
-			String sql = "INSERT INTO user VALUES(null, ?, ?, ?, ?, now())";
+			String sql = "INSERT INTO user VALUES(null, ?, ?, password(?), ?, now())";
 			pstmt = conn.prepareStatement(sql);
 			pstmt.setString(1, vo.getName());
 			pstmt.setString(2, vo.getEmail());
@@ -140,6 +140,56 @@ public class UserDao {
 		return result;
 	}
 	
+	public UserVo findByEmailAndPassword(UserVo vo) {
+		UserVo result = null;
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		
+		try {
+			conn = getConnection();
+			
+			String sql = "SELECT no, name FROM user WHERE email = ? AND password = password(?)";
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setString(1, vo.getEmail());
+			pstmt.setString(2, vo.getPassword());
+			
+			rs = pstmt.executeQuery();
+			if(rs.next()) {
+				result = new UserVo();
+				
+				Long on = rs.getLong(1);
+				String name = rs.getString(2);
+				
+				result.setNo(on);
+				result.setName(name);
+			}
+			
+
+			
+		} catch (SQLException e) {
+			System.out.println("Error:" + e);
+		} finally {
+			try {
+				if(rs != null) {
+					rs.close();
+				}
+				if(pstmt != null) {
+					pstmt.close();
+				}
+				
+				if(conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return result;
+	}
+	
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 
@@ -154,4 +204,6 @@ public class UserDao {
 		
 		return conn;
 	}
+
+	
 }
