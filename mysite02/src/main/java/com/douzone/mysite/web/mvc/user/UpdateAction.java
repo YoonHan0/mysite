@@ -12,31 +12,27 @@ import com.douzone.mysite.vo.UserVo;
 import com.douzone.web.mvc.Action;
 import com.douzone.web.util.MvcUtil;
 
-public class LoginAction implements Action {
+public class UpdateAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
-		String email = request.getParameter("email");
-		String password = request.getParameter("password");
-		
-		
+		Long no = Long.parseLong(request.getParameter("no"));
+		String name = request.getParameter("name");
+		String gender = request.getParameter("gender");
+
 		UserVo vo = new UserVo();
-		vo.setEmail(email);
-		vo.setPassword(password);
+		vo.setNo(no);
+		vo.setName(name);
+		vo.setGender(gender);
 		
-		UserVo authUser = new UserDao().findByEmailAndPassword(vo);
+		// System.out.println(vo);
 		
-		if(authUser == null) {
-			request.setAttribute("email", email);
-			MvcUtil.forward("user/loginform", request, response);
-			return;
-		}
-		
-		/* login 처리 */
+		new UserDao().updateFunction(vo);
+
 		HttpSession session = request.getSession(true);
-		session.setAttribute("authUser", authUser);	// mapping
-				
-		MvcUtil.redirect(request.getContextPath(), request, response);
+		session.setAttribute("authUser", vo);	// mapping
+		
+		MvcUtil.redirect(request.getContextPath() + "/user?a=updateform", request, response);	// main화면으로
 		
 	}
 
