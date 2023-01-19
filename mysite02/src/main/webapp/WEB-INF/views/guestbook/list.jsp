@@ -19,8 +19,7 @@
 		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="guestbook">
-				<form
-					action="<%=request.getContextPath()%>/guestbook?a=list method="post">
+				<form action="<%=request.getContextPath()%>/guestbook?a=guestCreate" method="post">
 					<table border=1 width=500>
 						<tr>
 							<td>이름</td>
