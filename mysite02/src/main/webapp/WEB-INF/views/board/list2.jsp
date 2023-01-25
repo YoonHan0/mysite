@@ -2,10 +2,6 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
-<%@ page import="com.douzone.mysite.vo.UserVo"%>
-<%
-	UserVo authUser = (UserVo)session.getAttribute("authUser");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -30,26 +26,39 @@
 						<th>조회수</th>
 						<th>작성일</th>
 						<th>&nbsp;</th>
+					</tr>				
+					<tr>
+						<td>3</td>
+						<td style="text-align:left; padding-left:0px">
+							<a href="">세 번째 글입니다.</a>
+						</td>
+						<td>안대혁</td>
+						<td>3</td>
+						<td>2015-10-11 12:04:20</td>
+						<td><a href="" class="del">삭제</a></td>
 					</tr>
-					<ul>
-						<c:forEach items="${list }" var ="vo" varStatus="status">
-							<tr>
-								<td>${vo.no }</td>
-								<td><a href="${pageContext.request.contextPath }/board">${vo.title }</a></td>
-								<td>${vo.userName }</td>
-								<td>${vo.hit }</td>
-								<td>${vo.reg_date }</td>
-								<%
-									if(authUser != null ) {
-								%>
-									<td><img src="${pageContext.request.contextPath }/assets/images/recycle.png"></td>
-								<%
-									}
-								%>
-							</tr>
-						
-						</c:forEach>
-					</ul>				
+					<tr>
+						<td>2</td>
+						<td style="text-align:left; padding-left:15px">
+							<img src="${pageContext.request.contextPath }/assets/images/reply.png">
+							<a href="">두 번째 글입니다.</a>
+						</td>
+						<td>안대혁</td>
+						<td>3</td>
+						<td>2015-10-02 12:04:12</td>
+						<td><a href="" class="del">삭제</a></td>
+					</tr>
+					<tr>
+						<td>1</td>
+						<td style="text-align:left; padding-left:30px">
+							<img src="${pageContext.request.contextPath }/assets/images/reply.png">
+							<a href="">첫 번째 글입니다.</a>
+						</td>
+						<td>안대혁</td>
+						<td>3</td>
+						<td>2015-09-25 07:24:32</td>
+						<td><a href="" class="del">삭제</a></td>
+					</tr>
 				</table>
 				
 				<!-- pager 추가 -->
@@ -65,15 +74,10 @@
 					</ul>
 				</div>					
 				<!-- pager 추가 -->
-				<%
-					if(authUser != null ) {
-				%>	
-					<div class="bottom">
-						<a href="${pageContext.request.contextPath }/board?a=write" id="new-book">글쓰기</a>
-					</div>
-				<%
-					}
-				%>				
+								
+				<div class="bottom">
+					<a href="${pageContext.request.contextPath }/board?a=write" id="new-book">글쓰기</a>
+				</div>				
 			</div>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
