@@ -19,6 +19,8 @@ public class GuestActionFactory extends ActionFactory {
 			action = new GuestDeleteFormAction();
 		} else if("delete".equals(actionName)) {
 			action = new GuestDeleteAction();
+		} else {
+			action = new GuestFormAction();		// a=list랑 같은 액션
 		}
 		
 		return action;
