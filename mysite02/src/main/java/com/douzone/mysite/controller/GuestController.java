@@ -7,8 +7,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.douzone.mysite.web.mvc.guest.GuestActionFactory;
-import com.douzone.web.mvc.Action;
-import com.douzone.web.mvc.ActionFactory;
+import com.douzone.web2.mvc.Action;
+import com.douzone.web2.mvc.ActionFactory;
 
 public class GuestController extends HttpServlet {
 	private static final long serialVersionUID = 1L;
@@ -19,7 +19,6 @@ public class GuestController extends HttpServlet {
 
 	protected void doGet(HttpServletRequest request, HttpServletResponse response)
 			throws ServletException, IOException {
-		request.setCharacterEncoding("utf-8");
 
 		String actionName = request.getParameter("a");
 

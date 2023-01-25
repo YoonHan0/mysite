@@ -2,8 +2,8 @@ package com.douzone.mysite.web.mvc.guest;
 
 
 import com.douzone.mysite.web.mvc.user.JoinAction;
-import com.douzone.web.mvc.Action;
-import com.douzone.web.mvc.ActionFactory;
+import com.douzone.web2.mvc.Action;
+import com.douzone.web2.mvc.ActionFactory;
 
 public class GuestActionFactory extends ActionFactory {
 
