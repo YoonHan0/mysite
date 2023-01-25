@@ -1,12 +1,8 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
 <%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
-<%@page import="com.douzone.mysite.vo.UserVo"%>
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 
-<%
-	UserVo vo = (UserVo)request.getAttribute("vo");
-%>
 <!DOCTYPE html>
 <html>
 <head>
@@ -21,29 +17,26 @@
 			<div id="user">
 				<form id="join-form" name="joinForm" method="post" action="${pageContext.request.contextPath }/user">
 					<input type='hidden' name="a" value="update">
-					<input type='hidden' name="no" value="<%=vo.getNo() %>">
+					<input type='hidden' name="no" value="${vo.no }">
 					<label class="block-label" for="name">이름</label>	<!-- 수정 가능 / 기존 이름 출력 -->
-					<input id="name" name="name" type="text" value="<%=vo.getName() %>">
+					<input id="name" name="name" type="text" value="${vo.name }">
 
 					<label class="block-label" for="email">이메일</label>
-					<h4><%=vo.getEmail() %></h4>							<!-- 수정 불가능 그냥 현재 이메일만 출력 -->
+					<h4>${vo.email }</h4>							<!-- 수정 불가능 그냥 현재 이메일만 출력 -->
 					
 					<fieldset>
 						<legend>성별</legend>
-						<% 
-							if(vo.getGender().equals("female")) {
-						%>
-							<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
-							<label>남</label> <input type="radio" name="gender" value="male">
-						<%
-							} else {
-						%>
-							<label>여</label> <input type="radio" name="gender" value="female">
-							<label>남</label> <input type="radio" name="gender" value="male" checked="checked">
-						<%
-							}
-						%>
+						<c:choose>
+							<c:when test='${vo.gender == "female" }' >
+								<label>여</label> <input type="radio" name="gender" value="female" checked="checked">
+								<label>남</label> <input type="radio" name="gender" value="male">
+							</c:when>
 							
+							<c:otherwise>
+								<label>여</label> <input type="radio" name="gender" value="female">
+								<label>남</label> <input type="radio" name="gender" value="male" checked="checked">
+							</c:otherwise>
+						</c:choose>							
 						
 					</fieldset>
 					
