@@ -1,24 +1,23 @@
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/fmt" prefix="fmt"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/functions" prefix="fn"%>
+
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
-<%@ page import= "java.util.List" %>
-<%@ page import="com.douzone.mysite.vo.GuestbookVo"%>
 
-<%
-	List<GuestbookVo> list = (List<GuestbookVo>)request.getAttribute("list");
-%>
 <!DOCTYPE html>
 <html>
 <head>
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
-<link href="<%=request.getContextPath()%>/assets/css/guestbook.css" rel="stylesheet" type="text/css">
+<link href="${pageContext.request.contextPath }/assets/css/guestbook.css" rel="stylesheet" type="text/css">
 </head>
 <body>
 	<div id="container">
-		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
+		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="guestbook">
-				<form action="<%=request.getContextPath()%>/guestbook?a=guestCreate" method="post">
+				<form action="${pageContext.request.contextPath }/guestbook?a=guestCreate" method="post">
 					<table border=1 width=500>
 						<tr>
 							<td>이름</td>
@@ -35,34 +34,32 @@
 					</table>
 				</form>
 				<ul>
-					<li>
-						<%
-						int i = list.size();
-						for(GuestbookVo vo : list) {
-						%>
-						<table width=510 border=1>
-							<tr>
-								<td><%= i-- %></td>
-								<td><%=vo.getName() %></td>
-								<td><%=vo.getRegDate() %></td>
-								<!--<input type=hidden name="no" value="<%=vo.getNo()%>"> -->
-								<td><a
-									href="<%=request.getContextPath()%>/guestbook?a=deleteform&&no=<%=vo.getNo()%>">삭제</a></td>
-							</tr>
-							<tr>
-								<td colspan=4><textarea readonly rows=3 cols=70
-										style="resize: none; border: none"><%=vo.getMessage()%></textarea></td>
-							</tr>
-						</table> 
-						<%
-						 }
-						%>
-					</li>
+					<c:set var="count" value="${fn:length(list) }" />
+					<c:forEach items="${list }" var ="vo" varStatus="status">
+						<li>
+							<table width=510 border=1>
+								<tr>
+									<td>[${count - status.index }]</td>
+									<td>${vo.name }</td>
+									<td>${vo.regDate }</td>
+									<td><a
+										href="${pageContext.request.contextPath }/guestbook?a=deleteform&&no=${vo.no}">삭제</a></td>
+								</tr>
+								<tr>
+									<td colspan=4><textarea readonly rows=3 cols=60
+											style="resize: none; border: none">${vo.message }
+									</textarea></td>
+								</tr>
+							</table> 
+						</li>
+					
+					</c:forEach>
+					
 				</ul>
 			</div>
 		</div>
-		<jsp:include page="/WEB-INF/views/includes/navigation.jsp" />
-		<jsp:include page="/WEB-INF/views/includes/footer.jsp" />
+		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
+		<c:import url="/WEB-INF/views/includes/footer.jsp" />
 	</div>
 </body>
 </html>
