@@ -15,20 +15,34 @@ public class AddBoardAction implements Action {
 
 	@Override
 	public void execute(HttpServletRequest request, HttpServletResponse response) throws ServletException, IOException {
+		if(request.getParameter("no") != null) {	// 댓글
+			int no = Integer.parseInt(request.getParameter("no"));
+			String title = request.getParameter("title");
+			String reply = request.getParameter("reply");
+			
+			BoardVo vo = new BoardVo();
+			vo.setNo(no);
+			vo.setTitle(title);
+			vo.setContent(reply);
+			
+			new BoardDao().insertReply(vo);
+			
+		}
+		else {			// 새 글
+			String title = request.getParameter("title");
+			String content = request.getParameter("content");
+			int userNo = Integer.parseInt(request.getParameter("userNo"));		
+			
+			BoardVo vo = new BoardVo();
+			vo.setTitle(title);
+			vo.setContent(content);
+			vo.setUserNo(userNo);
+					
+			new BoardDao().insert(vo);
 		
-		String title = request.getParameter("title");
-		String content = request.getParameter("content");
-		int userNo = Integer.parseInt(request.getParameter("userNo"));		
-		
-		BoardVo vo = new BoardVo();
-		vo.setTitle(title);
-		vo.setContent(content);
-		vo.setUserNo(userNo);
-				
-		new BoardDao().insert(vo);
+		}
 		
 		MvcUtil.redirect(request.getContextPath() + "/board?a=list", request, response);
-
 	}
 
 }

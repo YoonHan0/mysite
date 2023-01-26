@@ -44,6 +44,7 @@
 						if(authUser != null) {
 					%>
 						<a href="${pageContext.request.contextPath }/board?a=UpdateForm&&no=${vo.no }">글수정</a>
+						<a href="${pageContext.request.contextPath }/board?a=replyform&&no=${vo.no }">댓글</a>
 					<%
 						}
 					%>

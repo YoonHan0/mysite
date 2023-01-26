@@ -22,7 +22,8 @@ SELECT a.no, a.title, b.name, a.hit, a.reg_date
 FROM board a JOIN user b ON a.user_no = b.no;
 
 SELECT *
-FROM board;
+FROM board
+ORDER BY no ASC;
 DESC board;
 
 INSERT INTO board VALUES(null, '오늘점심뭐먹', '제발 되라 부탁할께', 0, now(), 0, 0, 0, 1);
@@ -30,3 +31,36 @@ INSERT INTO board VALUES(null, '오늘점심뭐먹', '제발 되라 부탁할께
 SELECT title, contents
 FROM board
 WHERE no=1;
+
+UPDATE board
+SET title="수정완료 테스트380", contents="수정 완료 테스트 380"
+WHERE no = 1;
+
+DELETE
+FROM board
+WHERE no=2;
+
+SELECT *
+FROM board;
+
+DESC board;
+
+INSERT INTO board VALUES(null, "테스트 제목2", "테스트 내용2", 0, now(), (SELECT IFNULL(MAX(g_no)+1, 1) FROM board b), 1, 0, 1);
+
+
+INSERT INTO board VALUES(null, "테스트 댓글1", "테스트 댓글 내용1", 0, now(), 1, 1, 0, 1);
+
+SELECT a.g_no, a.o_no, a.depth, b.no
+FROM board a JOIN user b ON a.user_no = b.no
+WHERE a.no = 1;
+
+SELECT *
+FROM board;
+
+
+UPDATE board
+SET o_no = o_no + 1
+WHERE g_no = 4 AND o_no > 1;
+
+
+
