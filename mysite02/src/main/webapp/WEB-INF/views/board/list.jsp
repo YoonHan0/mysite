@@ -39,9 +39,10 @@
 							</c:when>
 							
 							<c:otherwise>
+								<c:set var="count" value="${fn:length(list) }" />
 								<c:forEach items="${list }" var ="vo" varStatus="status">
 									<tr>
-										<td>${vo.no }</td>
+										<td>[${count - status.index }]</td>
 										<td><a href="${pageContext.request.contextPath }/board?a=viewpage&&no=${vo.no}&&userNo=${vo.userNo}">${vo.title }</a></td>
 										<td>${vo.userName }</td>
 										<td>${vo.hit }</td>
@@ -49,7 +50,7 @@
 										<%
 											if(authUser != null ) {
 										%>
-											<td><img src="${pageContext.request.contextPath }/assets/images/recycle.png"></td>
+											<td><a href="${pageContext.request.contextPath }/board?a=delete&&no=${vo.no }"><img src="${pageContext.request.contextPath }/assets/images/recycle.png"></a></td>
 										<%
 											}
 										%>

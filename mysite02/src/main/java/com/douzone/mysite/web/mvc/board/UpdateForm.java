@@ -9,7 +9,6 @@ import javax.servlet.http.HttpSession;
 
 import com.douzone.mysite.dao.BoardDao;
 import com.douzone.mysite.vo.BoardVo;
-import com.douzone.mysite.vo.UserVo;
 import com.douzone.web.mvc.Action;
 import com.douzone.web.util.MvcUtil;
 

@@ -19,6 +19,8 @@ public class BoardActionFactory extends ActionFactory {
 			action = new UpdateForm();
 		} else if("update".equals(actionName)) {
 			action = new UpdateAction();
+		} else if("delete".equals(actionName)) {
+			action = new DeleteAction();
 		}
 		else {
 			action = new ListAction();

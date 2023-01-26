@@ -23,8 +23,10 @@ public class BoardDao {
 		try {
 			conn = getConnection();
 
-			String sql = "SELECT a.no, a.title, b.name, a.hit, a.reg_date, a.user_no"
-					+ " FROM board a JOIN user b ON a.user_no = b.no";
+			String sql = 
+					"SELECT a.no, a.title, b.name, a.hit, a.reg_date, a.user_no"
+					+ " FROM board a JOIN user b ON a.user_no = b.no"
+					+ " ORDER BY a.no ASC";
 			pstmt = conn.prepareStatement(sql);
 
 			rs = pstmt.executeQuery();
@@ -256,5 +258,40 @@ public class BoardDao {
 			}
 		}
 		System.out.println("========== Board UPDATE 완료! ==========");
+	}
+
+	public void delete(BoardVo vo) {
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+
+		try {
+			conn = getConnection();
+
+			String sql = 
+					"DELETE" +
+					" FROM board" +
+					" WHERE no = ?";
+			
+			pstmt = conn.prepareStatement(sql);
+			pstmt.setInt(1, vo.getNo());
+
+			pstmt.executeUpdate();
+
+		} catch (SQLException e) {
+			System.out.println("Error:" + e);
+		} finally {
+			try {
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		System.out.println("========== Board DELETE 완료! ==========");
 	}
 }
