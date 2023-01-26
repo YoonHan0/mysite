@@ -24,7 +24,7 @@ public class BoardDao {
 			conn = getConnection();
 
 			String sql = 
-					"SELECT a.no, a.title, b.name, a.hit, a.reg_date, a.user_no"
+					"SELECT a.no, a.title, b.name, a.hit, a.reg_date, a.user_no, a.o_no, a.depth"
 					+ " FROM board a JOIN user b ON a.user_no = b.no"
 					+ " ORDER BY a.g_no DESC, a.o_no ASC";
 			pstmt = conn.prepareStatement(sql);
@@ -37,6 +37,8 @@ public class BoardDao {
 				int hit = rs.getInt(4);
 				String reg_date = rs.getString(5);
 				int user_no = rs.getInt(6);
+				int o_no = rs.getInt(7);
+				int depth = rs.getInt(8);
 
 				BoardVo vo = new BoardVo();
 				vo.setNo(no);
@@ -45,6 +47,8 @@ public class BoardDao {
 				vo.setHit(hit);
 				vo.setReg_date(reg_date);
 				vo.setUserNo(user_no);
+				vo.setO_no(o_no);
+				vo.setDepth(depth);
 
 				result.add(vo);
 			}
