@@ -18,11 +18,15 @@ SELECT * FROM guestbook;
 DESC guestbook;
 insert INTO guestbook VALUES(null, '윤한영', '1234', '안녕하세요', now());
 
+SELECT a.no, a.title, b.name, a.hit, a.reg_date
+FROM board a JOIN user b ON a.user_no = b.no;
+
 SELECT *
 FROM board;
 DESC board;
 
-SELECT *
-FROM user;
+INSERT INTO board VALUES(null, '오늘점심뭐먹', '제발 되라 부탁할께', 0, now(), 0, 0, 0, 1);
 
-ISERT INTO board VALUES(null, '오늘점심뭐먹', '제발 되라 부탁할께', 0, now(), 0, 0, 0, 1);
+SELECT title, contents
+FROM board
+WHERE no=1;

@@ -32,23 +32,33 @@
 						<th>&nbsp;</th>
 					</tr>
 					<ul>
-						<c:forEach items="${list }" var ="vo" varStatus="status">
-							<tr>
-								<td>${vo.no }</td>
-								<td><a href="${pageContext.request.contextPath }/board">${vo.title }</a></td>
-								<td>${vo.userName }</td>
-								<td>${vo.hit }</td>
-								<td>${vo.reg_date }</td>
-								<%
-									if(authUser != null ) {
-								%>
-									<td><img src="${pageContext.request.contextPath }/assets/images/recycle.png"></td>
-								<%
-									}
-								%>
-							</tr>
+						<c:set var="list" value="${list }" />
+						<c:choose>
+							<c:when test='${empty list }'>
+								<td><p style='text-align: center'>비어있는 리스트</p></td>
+							</c:when>
+							
+							<c:otherwise>
+								<c:forEach items="${list }" var ="vo" varStatus="status">
+									<tr>
+										<td>${vo.no }</td>
+										<td><a href="${pageContext.request.contextPath }/board?a=viewpage&&no=${vo.no}&&userNo=${vo.userNo}">${vo.title }</a></td>
+										<td>${vo.userName }</td>
+										<td>${vo.hit }</td>
+										<td>${vo.reg_date }</td>
+										<%
+											if(authUser != null ) {
+										%>
+											<td><img src="${pageContext.request.contextPath }/assets/images/recycle.png"></td>
+										<%
+											}
+										%>
+									</tr>
+							
+								</c:forEach>
+							</c:otherwise>
+						</c:choose>
 						
-						</c:forEach>
 					</ul>				
 				</table>
 				
