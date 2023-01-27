@@ -36,7 +36,7 @@
 					</table>
 					<div class="bottom">
 						<input type="submit" value="입력">
-						<a href="${pageContext.request.contextPath }/board">게시판으로</a>
+						<a href="${pageContext.request.contextPath }/board?a=list&&page=1">게시판으로</a>
 					</div>
 				</form>
 			</div>

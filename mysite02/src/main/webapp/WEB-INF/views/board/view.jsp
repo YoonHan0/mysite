@@ -39,7 +39,7 @@
 						</tr>					
 				</table>
 				<div class="bottom">
-					<a href="${pageContext.request.contextPath }/board">글목록</a>
+					<a href="#" onClick="history.go(-1)">글목록</a>
 					<%
 						if(authUser != null) {
 					%>

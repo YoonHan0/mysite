@@ -9,6 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.douzone.mysite.vo.BoardVo;
+import com.douzone.mysite.vo.PageVo;
 import com.douzone.mysite.vo.UserVo;
 
 public class BoardDao {
@@ -49,6 +50,70 @@ public class BoardDao {
 				vo.setUserNo(user_no);
 				vo.setO_no(o_no);
 				vo.setDepth(depth);
+
+				result.add(vo);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Error:" + e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+
+		return result;
+	}
+	public List<BoardVo> findByPageNo(PageVo pagevo) {
+		
+		List<BoardVo> result = new ArrayList<>();
+		int startNo = (pagevo.getNo() - 1) * pagevo.getAmount();	
+		
+		// System.out.println("startNo :" + startNo + " endNo: " + endNo);
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+
+		try {
+			conn = getConnection();
+
+			String sql = 
+					"SELECT a.no, a.title, b.name, a.hit, a.reg_date, a.user_no, a.o_no, a.depth"
+					+ " FROM board a JOIN user b ON a.user_no = b.no"
+					+ " ORDER BY a.g_no DESC, a.o_no ASC"
+					+ " LIMIT ?, ?";
+			pstmt = conn.prepareStatement(sql);
+			
+			pstmt.setInt(1, startNo);
+			pstmt.setInt(2, pagevo.getAmount());
+			
+			rs = pstmt.executeQuery();
+			
+			while (rs.next()) {
+
+				BoardVo vo = new BoardVo();
+				
+				vo.setNo(rs.getInt(1));
+				vo.setTitle(rs.getString(2));
+				vo.setUserName(rs.getString(3));
+				vo.setHit(rs.getInt(4));
+				vo.setReg_date(rs.getString(5));
+				vo.setUserNo(rs.getInt(6));
+				vo.setO_no(rs.getInt(7));
+				vo.setDepth(rs.getInt(8));
 
 				result.add(vo);
 			}
@@ -399,6 +464,66 @@ public class BoardDao {
 		}
 	}
 	
+	public PageVo pageAll(int pageNo) {
+		
+		PageVo vo = new PageVo();
+		
+		Connection conn = null;
+		PreparedStatement pstmt = null;
+		ResultSet rs = null;
+		int amount = vo.getAmount();
+
+		try {
+			conn = getConnection();
+
+			String sql = 
+					"SELECT count(no)"+
+					" FROM board";			// 전체 행의 개수
+			
+			pstmt = conn.prepareStatement(sql);
+
+			rs = pstmt.executeQuery();
+			while (rs.next()) {
+				int totalRows = rs.getInt(1);
+				int temp = totalRows / amount;
+				int temp2 = totalRows % amount;
+				int size = 0;
+				
+				if(temp2 != 0) {
+					size = temp + 1;
+				} else {
+					size = temp;
+				}
+				
+
+				vo.setNo(pageNo);
+				vo.setSize(size);
+				vo.setTotalRows(totalRows);
+			}
+
+		} catch (SQLException e) {
+			System.out.println("Error:" + e);
+		} finally {
+			try {
+				if (rs != null) {
+					rs.close();
+				}
+
+				if (pstmt != null) {
+					pstmt.close();
+				}
+
+				if (conn != null) {
+					conn.close();
+				}
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
+		}
+		
+		return vo;
+	}
+	
 	private Connection getConnection() throws SQLException {
 		Connection conn = null;
 
@@ -413,4 +538,5 @@ public class BoardDao {
 
 		return conn;
 	}
+	
 }

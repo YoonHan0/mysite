@@ -12,8 +12,6 @@ public class BoardVo {
 	private int userNo;
 	private String userName;
 	
-
-	
 	public String getUserName() {
 		return userName;
 	}

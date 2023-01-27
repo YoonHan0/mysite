@@ -42,7 +42,7 @@ public class AddBoardAction implements Action {
 		
 		}
 		
-		MvcUtil.redirect(request.getContextPath() + "/board?a=list", request, response);
+		MvcUtil.redirect(request.getContextPath() + "/board?a=list&&page=1", request, response);
 	}
 
 }
