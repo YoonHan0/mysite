@@ -43,25 +43,21 @@
 								<c:forEach items="${list }" var ="vo" varStatus="status">
 									<tr>
 										<td>[${count - status.index }]</td>
-
-										<c:if test='${vo.depth eq 0 }'>
-											<td style="text-align:left; padding-left:0px">
-												<a href="${pageContext.request.contextPath }/board?a=viewpage&&no=${vo.no}&&userNo=${vo.userNo}">${vo.title }</a>
-											</td>
-										</c:if>
 										
-										<c:if test='${vo.depth eq 1 }'>
-											<td style="text-align:left; padding-left:15px"><img src="${pageContext.request.contextPath }/assets/images/reply.png">
-												<a href="${pageContext.request.contextPath }/board?a=viewpage&&no=${vo.no}&&userNo=${vo.userNo}">${vo.title }</a>
-											</td>
-										</c:if>
+										<c:choose>
+											<c:when test='${vo.depth eq 0 }'>
+												<td style="text-align:left; padding-left:0px">
+													<a href="${pageContext.request.contextPath }/board?a=viewpage&&no=${vo.no}&&userNo=${vo.userNo}">${vo.title }</a>
+												</td>
+											</c:when>
+											
+											<c:otherwise>
+												<td style="text-align:left; padding-left:${vo.depth*10}px"><img src="${pageContext.request.contextPath }/assets/images/reply.png">
+													<a href="${pageContext.request.contextPath }/board?a=viewpage&&no=${vo.no}&&userNo=${vo.userNo}">${vo.title }</a>
+												</td>
+											</c:otherwise>
+										</c:choose>
 										
-										<c:if test='${vo.depth eq 2 }'>
-											<td style="text-align:left; padding-left:30px"><img src="${pageContext.request.contextPath }/assets/images/reply.png">
-												<a href="${pageContext.request.contextPath }/board?a=viewpage&&no=${vo.no}&&userNo=${vo.userNo}">${vo.title }</a>
-											</td>
-										</c:if>
-
 										<td>${vo.userName }</td>
 										<td>${vo.hit }</td>
 										<td>${vo.reg_date }</td>
