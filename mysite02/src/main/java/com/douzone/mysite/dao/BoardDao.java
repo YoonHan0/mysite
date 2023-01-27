@@ -382,6 +382,10 @@ public class BoardDao {
 			System.out.println("Error:" + e);
 		} finally {
 			try {
+				if (pstmt01 != null) {
+					pstmt01.close();
+				}
+				
 				if (pstmt02 != null) {
 					pstmt02.close();
 				}
