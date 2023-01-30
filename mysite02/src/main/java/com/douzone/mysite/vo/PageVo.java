@@ -3,8 +3,18 @@ package com.douzone.mysite.vo;
 public class PageVo {
 	private int no;
 	private int amount = 5;	// 초기값 5
-	private int size;
+	private int w_size = 5;	// 아래 숫자 컬럼의 사이즈
+	private int size;		// 총 페이지의 사이즈
 	private int totalRows;
+	
+	public int getW_size() {
+		return w_size;
+	}
+
+	public void setW_size(int w_size) {
+		this.w_size = w_size;
+	}
+
 	
 	public int getTotalRows() {
 		return totalRows;

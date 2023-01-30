@@ -22,8 +22,7 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 		<div id="content">
 			<div id="board">
 				<form id="search_form" action="" method="post">
-					<input type="text" id="kwd" name="kwd" value=""> <input
-						type="submit" value="찾기">
+					<input type="text" id="kwd" name="kwd" value=""> <input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
 					<tr>
@@ -87,8 +86,7 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 				<div class="pager">
 					<ul>
 						<c:if test="${pageVo.no != 1 }">
-							<li><a
-								href="${pageContext.request.contextPath }/board?a=list&&page=${pageVo.no - 1}">◀</a></li>
+							<li><a href="${pageContext.request.contextPath }/board?a=list&&page=${pageVo.no - 1}">◀</a></li>
 						</c:if>
 
 						<c:forEach var="i" begin="1" end="${pageVo.size }" step="1">
@@ -97,9 +95,9 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 								<c:when test='${pageVo.no == i }'>
 									<li class="selected">${i }</li>
 								</c:when>
-								<c:otherwise>
+								<c:when test='${i != pageVo.no && i <= pageVo.w_size}'>
 									<li><a href="${pageContext.request.contextPath }/board?a=list&&page=${i }">${i }</a></li>
-								</c:otherwise>
+								</c:when>
 							</c:choose>
 							
 							
@@ -107,8 +105,7 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 						</c:forEach>
 
 						<c:if test="${pageVo.no < pageVo.size }">
-							<li><a
-								href="${pageContext.request.contextPath }/board?a=list&&page=${pageVo.no + 1}">▶</a></li>
+							<li><a href="${pageContext.request.contextPath }/board?a=list&&page=${pageVo.no + 1}">▶</a></li>
 						</c:if>
 
 					</ul>
