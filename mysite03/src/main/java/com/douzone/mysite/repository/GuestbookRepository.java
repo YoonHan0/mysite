@@ -8,8 +8,11 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import org.springframework.stereotype.Repository;
+
 import com.douzone.mysite.vo.GuestbookVo;
 
+@Repository
 public class GuestbookRepository {
 	
 	public Boolean deleteByNoAndPassword(Long no, String password) {
@@ -93,9 +96,9 @@ public class GuestbookRepository {
 			conn = getConnection();
 			
 			String sql =
-				"    select no, name, message, date_format(reg_date, '%Y/%m/%d %H:%i:%s')" + 
-				"      from guestbook" + 
-				"  order by reg_date desc";
+				"select no, name, message, date_format(reg_date, '%Y/%m/%d %H:%i:%s')" + 
+				" from guestbook" + 
+				" order by reg_date desc";
 			pstmt = conn.prepareStatement(sql);
 			
 			rs = pstmt.executeQuery();
