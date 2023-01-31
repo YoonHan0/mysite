@@ -54,7 +54,15 @@ public class UserController {
 	
 	@RequestMapping(value="/update", method=RequestMethod.GET)
 	public String update(HttpSession session, Model model) {
-		UserVo authUser = (UserVo)session.getAttribute("authUser");
+		
+		// Access Control
+		UserVo authUser = (UserVo)session.getAttribute("authUser"); // authUser로 mapping된 session을 get해서
+		if(authUser == null) {										// 로그인된 상태에서 들어왔는지 확인
+			return "redirect:/";
+		}
+		//////////////////////////////////////////////////
+		
+		
 		UserVo vo = userService.getUserByNo(authUser.getNo());
 		
 		model.addAttribute("userVo", vo);
@@ -63,9 +71,17 @@ public class UserController {
 	
 	@RequestMapping(value="/update", method=RequestMethod.POST)
 	public String update(HttpSession session, Model model, UserVo vo) {	//name, email, password, gender
-		
+		// Access Control
+		UserVo authUser = (UserVo) session.getAttribute("authUser");
+		if(authUser == null) {
+			return "redirect:/";
+		}
+		///////////////////////////////////////////////////
+		vo.setNo(authUser.getNo());
 		userService.updateUser(vo);
-		session.setAttribute("authUser", vo);	// 변경된 정보로 mapping
+		
+		//session.setAttribute("authUser", vo);	// 변경된 정보로 mapping, session을 수정해줌으로써 바로 변경된 정보로 세션 mapping
+		authUser.setName(vo.getName());			// 위와 같은 방식인데 name만 변경해주는 방식
 		
 		return "redirect:/user/update";
 	}
