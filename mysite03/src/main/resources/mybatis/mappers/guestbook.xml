@@ -2,52 +2,40 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="guestbook">
 
-	<insert id="insert" parameterType="uservo"> <!-- typeAlias로 com.douzone.mysite.vo.UserVo -> uservo -->
+	<resultMap id="findAllList" type="guestbookvo">
+		<id property="no" column="no"/> 
+		<result property="name" column="name" />
+		<result property="message" column="message" />
+		<result property="regDate" column="reg_date" />
+	</resultMap>
+	
+	<select id="findAll" resultType="guestbookvo">	<!-- map하는 과정에서 에러남 -->
 		<![CDATA[
-			INSERT INTO user 
-			VALUES (null, #{name}, #{email}, password(#{password}), #{gender}, now())
+			SELECT no, name, message, reg_date
+			FROM guestbook 
+			ORDER BY reg_date desc
 		]]>
-		
+	</select>
+	
+	<insert id="insert" parameterType="guestbookvo">
+		<![CDATA[
+			INSERT INTO guestbook 
+			values(null, #{name }, #{password }, #{message}, now())
+		]]>
+		<selectKey keyProperty="no" resultType="long" order="AFTER">
+			<![CDATA[
+				SELECT last_insert_id()
+			]]>
+		</selectKey>
 	</insert>
-
-	<select id="findByEmailAndPassword" resultType="uservo" parameterType="map"> 
+	
+	<delete id="deleteByNoAndPassword" parameterType="map">
 		<![CDATA[
-			SELECT no, name 
-			FROM user 
-			WHERE email = #{e } AND password = password(#{p })
+			DELETE FROM guestbook 
+			WHERE no = #{no } AND password = #{password }
 		]]>
-	</select>
-	
-	<select id="findByNo" resultType="uservo" parameterType="long"> <!-- 기본 자료형도 Alias가 되어 있음 소문자 Parameter가 값인 경우 의미가 있는 것으로 적어주기-->	
-		<![CDATA[
-			select no, name, email, gender 
-			from user 
-			where no=#{no }
-		]]>
-	</select>
-	
-	<update id="update" parameterType="uservo"> <!-- 기본 자료형도 Alias가 되어 있음 소문자 Parameter가 값인 경우 의미가 있는 것으로 적어주기-->
-	
-		<choose>
-			<when test='password==""'>
-				<![CDATA[
-					UPDATE user 
-					SET name=#{name}, gender=#{gender} 
-					WHERE no=#{no}
-				]]>	
-			</when>
-			<otherwise>
-				<![CDATA[
-					UPDATE user 
-					SET name=#{name}, gender=#gender}, password=password(#{password}) 
-					WHERE no=#{no}
-				]]>
-			</otherwise>
-		</choose>
-		
-		
-	</update>
+	</delete>
 	
 </mapper>
-
+<!-- reg_date as regDate하는 이유 : GuestbookVo에 regDate 저장되어 있어서 -->
 

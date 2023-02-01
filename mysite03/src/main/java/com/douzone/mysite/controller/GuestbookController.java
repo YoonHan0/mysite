@@ -30,8 +30,11 @@ public class GuestbookController {
 	
 	@RequestMapping("/add")
 	public String add(GuestbookVo vo) {		// name, password, message
+		System.out.println("1===============" + vo);
 		guestbookService.addMessage(vo);
-		return "redirect:/";	// add 했으니까 작업 끝
+		
+		System.out.println("2===============" + vo);
+		return "redirect:/guestbook";	// add 했으니까 작업 끝 Redirect!
 	}
 	
 	@RequestMapping(value = "/delete", method=RequestMethod.GET)
