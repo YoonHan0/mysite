@@ -467,11 +467,23 @@ public class BoardDao {
 	public PageVo pageAll(int pageNo) {
 		
 		PageVo vo = new PageVo();
+		int beginNo = 0;
+		int endNo = 0;
+		
+		if(pageNo == 0 || pageNo == 1) {
+			beginNo = 1;
+			endNo = 5;
+		}
+		beginNo = 1 + ((pageNo-1)/vo.getW_size()) * vo.getW_size();
+		endNo = 4 + ((pageNo-1)/vo.getW_size()) * vo.getW_size() + 1;
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;
 		ResultSet rs = null;
 		int amount = vo.getAmount();
+		
+		
+		
 
 		try {
 			conn = getConnection();
@@ -484,10 +496,11 @@ public class BoardDao {
 
 			rs = pstmt.executeQuery();
 			while (rs.next()) {
-				int totalRows = rs.getInt(1);
-				int temp = totalRows / amount;
+				int totalRows = rs.getInt(1);	// totalRows: 전체 행의 개수
+				int temp = totalRows / amount;	// amount: Limit = 5 리스트의 출력 수
 				int temp2 = totalRows % amount;
-				int size = 0;
+				int size = 0;					// size: 총 페이지의 수
+				
 				
 				if(temp2 != 0) {
 					size = temp + 1;
@@ -499,6 +512,8 @@ public class BoardDao {
 				vo.setNo(pageNo);
 				vo.setSize(size);
 				vo.setTotalRows(totalRows);
+				vo.setBegin(beginNo);
+				vo.setEnd(endNo);
 			}
 
 		} catch (SQLException e) {

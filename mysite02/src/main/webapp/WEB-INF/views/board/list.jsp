@@ -16,7 +16,6 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 	rel="stylesheet" type="text/css">
 </head>
 <body>
-	<c:set var="pageVo" value="${pageVo }" />
 	<div id="container">
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
@@ -89,7 +88,7 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 							<li><a href="${pageContext.request.contextPath }/board?a=list&&page=${pageVo.no - 1}">◀</a></li>
 						</c:if>
 
-						<c:forEach var="i" begin="1" end="${pageVo.size }" step="1">
+						<c:forEach var="i" begin="${pageVo.begin }" end="${pageVo.end }" step="1">
 							
 							<c:choose>
 								<c:when test='${pageVo.no == i }'>
