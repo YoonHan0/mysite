@@ -94,7 +94,7 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 								<c:when test='${pageVo.no == i }'>
 									<li class="selected">${i }</li>
 								</c:when>
-								<c:when test='${i != pageVo.no && i <= pageVo.w_size}'>
+								<c:when test='${i != pageVo.no && i <= pageVo.size}'>
 									<li><a href="${pageContext.request.contextPath }/board?a=list&&page=${i }">${i }</a></li>
 								</c:when>
 							</c:choose>
