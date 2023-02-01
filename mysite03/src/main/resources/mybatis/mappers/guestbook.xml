@@ -9,7 +9,7 @@
 		<result property="regDate" column="reg_date" />
 	</resultMap>
 	
-	<select id="findAll" resultType="guestbookvo">	<!-- map하는 과정에서 에러남 -->
+	<select id="findAll" resultMap="findAllList">
 		<![CDATA[
 			SELECT no, name, message, reg_date
 			FROM guestbook 

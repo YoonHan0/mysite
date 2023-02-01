@@ -4,7 +4,7 @@
 
 	<settings>
 	<!-- 프로젝트 컬럼 이름을 언더바 기법에서 카멜 기법으로 자동 변경 -->
-		<setting name="mapUnderscoreToCamelCase" value="true" />
+		<setting name="mapUnderscoreToCamelCase" value="false" />
 	</settings>
 	
 	<typeAliases>
