@@ -473,9 +473,11 @@ public class BoardDao {
 		if(pageNo == 0 || pageNo == 1) {
 			beginNo = 1;
 			endNo = 5;
+		} else {
+			beginNo = 1 + ((pageNo-1)/vo.getW_size()) * vo.getW_size();
+			endNo = 4 + ((pageNo-1)/vo.getW_size()) * vo.getW_size() + 1;
 		}
-		beginNo = 1 + ((pageNo-1)/vo.getW_size()) * vo.getW_size();
-		endNo = 4 + ((pageNo-1)/vo.getW_size()) * vo.getW_size() + 1;
+		
 		
 		Connection conn = null;
 		PreparedStatement pstmt = null;

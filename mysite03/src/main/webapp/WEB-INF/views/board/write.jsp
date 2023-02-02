@@ -18,9 +18,9 @@
 		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board?a=AddBoardAction">
+				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board/write">
 					<!--  <input type="hidden" name="a" value="write">  -->
-					<input type="hidden" name="userNo" value="${authUser.no }">
+					<input type="hidden" name="userNo" value="${authUser.no }"> 
 					<table class="tbl-ex">
 						<tr>
 							<th colspan="2">글쓰기</th>
@@ -31,12 +31,12 @@
 						</tr>
 						<tr>
 							<td class="label">내용</td>
-							<td><textarea id="content" name="content"></textarea></td>
+							<td><textarea id="content" name="contents"></textarea></td>
 						</tr>
 					</table>
 					<div class="bottom">
 						<input type="submit" value="입력">
-						<a href="${pageContext.request.contextPath }/board?a=list&&page=1">게시판으로</a>
+						<a href="${pageContext.request.contextPath }/">게시판으로</a>
 					</div>
 				</form>
 			</div>

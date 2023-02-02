@@ -4,6 +4,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import javax.sql.DataSource;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -12,6 +14,9 @@ import com.douzone.mysite.vo.BoardVo;
 
 @Repository
 public class BoardRepository {
+	
+	@Autowired
+	private DataSource dataSouce;
 	@Autowired
 	private SqlSession sqlSession;
 	
@@ -27,6 +32,22 @@ public class BoardRepository {
 	public int getTotalCount(String keyword) {
 		sqlSession.selectOne("board.getTota", keyword);
 		return 0;
+	}
+
+	/* ========== 전체 페이지 가지고 오기 ========== */
+	public List<BoardVo> findAll() {
+		return sqlSession.selectList("board.findAll");
+	}
+
+	public void insert(BoardVo vo) {
+		sqlSession.insert("board.insert", vo);
+	}
+	
+	public BoardVo viewPageByNo(int no) {
+		return sqlSession.selectOne("board.viewPageByNo", no);
+	}
+	public BoardVo getContents(int no) {
+		return sqlSession.selectOne("board.getContents", no);
 	}
 
 }

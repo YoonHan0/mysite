@@ -10,7 +10,7 @@
 <link href="${pageContext.request.contextPath }/assets/css/board.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<c:set var="vo" value="${vo }" />
+	<c:set var="vo" value="${list }" />
 	
 	<div id="container">
 		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
@@ -29,8 +29,8 @@
 						<tr>
 							<td class="label">내용</td>
 							<td>
-								<textarea id="content" name="content">
-									${vo.content }
+								<textarea id="content" name="contents">
+									${vo.contents }
 								</textarea>
 							</td>
 						</tr>

@@ -33,7 +33,7 @@
 							<td class="label">내용</td>
 							<td>
 								<div class="view-content">
-									${fn:replace(vo.content, newline, "<br>") }
+									${fn:replace(vo.contents, newline, "<br>") }
 								</div>
 							</td>
 						</tr>					
@@ -43,8 +43,8 @@
 					<%
 						if(authUser != null) {
 					%>
-						<a href="${pageContext.request.contextPath }/board?a=UpdateForm&&no=${vo.no }">글수정</a>
-						<a href="${pageContext.request.contextPath }/board?a=replyform&&no=${vo.no }">댓글</a>
+						<a href="${pageContext.request.contextPath }/board/update?no=${vo.no }&&userNo=${authUser.no}">글수정</a>
+						<a href="${pageContext.request.contextPath }/board/reply?no=${vo.no }">댓글</a>
 					<%
 						}
 					%>

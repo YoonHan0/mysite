@@ -1,11 +1,12 @@
 package com.douzone.mysite.vo;
 
 public class BoardVo {
+	
 	private int no;
 	private String title;
-	private String content;
+	private String contents;
 	private int hit;
-	private String reg_date;
+	private String regDate;
 	private int g_no;
 	private int o_no;
 	private int depth;
@@ -36,11 +37,12 @@ public class BoardVo {
 	public void setTitle(String title) {
 		this.title = title;
 	}
-	public String getContent() {
-		return content;
+
+	public String getContents() {
+		return contents;
 	}
-	public void setContent(String content) {
-		this.content = content;
+	public void setContents(String contents) {
+		this.contents = contents;
 	}
 	public int getHit() {
 		return hit;
@@ -48,11 +50,12 @@ public class BoardVo {
 	public void setHit(int hit) {
 		this.hit = hit;
 	}
-	public String getReg_date() {
-		return reg_date;
+
+	public String getRegDate() {
+		return regDate;
 	}
-	public void setReg_date(String reg_date) {
-		this.reg_date = reg_date;
+	public void setRegDate(String regDate) {
+		this.regDate = regDate;
 	}
 	public int getG_no() {
 		return g_no;
@@ -71,5 +74,12 @@ public class BoardVo {
 	}
 	public void setDepth(int depth) {
 		this.depth = depth;
+	}
+	
+	@Override
+	public String toString() {
+		return "BoardVo [no=" + no + ", title=" + title + ", content=" + contents + ", hit=" + hit + ", reg_date="
+				+ regDate + ", g_no=" + g_no + ", o_no=" + o_no + ", depth=" + depth + ", userNo=" + userNo
+				+ ", userName=" + userName + "]";
 	}
 }

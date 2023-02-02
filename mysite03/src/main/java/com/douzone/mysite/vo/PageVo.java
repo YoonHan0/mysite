@@ -1,6 +1,7 @@
 package com.douzone.mysite.vo;
 
 public class PageVo {
+
 	private int no;
 	private int amount = 5;	// 초기값 5
 	private int w_size = 5;	// 아래 숫자 컬럼의 사이즈
@@ -68,5 +69,9 @@ public class PageVo {
 		this.no = no;
 	}
 
-	
+	@Override
+	public String toString() {
+		return "PageVo [no=" + no + ", amount=" + amount + ", w_size=" + w_size + ", size=" + size + ", totalRows="
+				+ totalRows + ", begin=" + begin + ", end=" + end + "]";
+	}	
 }

@@ -48,7 +48,7 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 											<c:choose>
 												<c:when test='${vo.depth eq 0 }'>
 													<td style="text-align: left; padding-left: 0px">
-														<a href="${pageContext.request.contextPath }/board/viewpage&&no=${vo.no}&&userNo=${vo.userNo}">${vo.title }</a>
+														<a href="${pageContext.request.contextPath }/board/viewpage?no=${vo.no}&&userNo=${vo.userNo}">${vo.title }</a>
 													</td>
 												</c:when>
 
@@ -56,14 +56,14 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 													<td style="text-align:left; padding-left:${vo.depth*10}px"><img
 														src="${pageContext.request.contextPath }/assets/images/reply.png">
 														<a
-														href="${pageContext.request.contextPath }/board/viewpage&&no=${vo.no}&&userNo=${vo.userNo}">${vo.title }</a>
+														href="${pageContext.request.contextPath }/board/viewpage?no=${vo.no}&&userNo=${vo.userNo}">${vo.title }</a>
 													</td>
 												</c:otherwise>
 											</c:choose>
 
 											<td>${vo.userName }</td>
 											<td>${vo.hit }</td>
-											<td>${vo.reg_date }</td>
+											<td>${vo.regDate }</td>
 											
 											<td>	
 												<c:if test='${authUser.no == vo.userNo}'>
@@ -84,7 +84,7 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 				<div class="pager">
 					<ul>
 						<c:if test="${pageVo.no != 1 }">
-							<li><a href="${pageContext.request.contextPath }/board/list&&page=${pageVo.no - 1}">◀</a></li>
+							<li><a href="${pageContext.request.contextPath }/board/list?page=${pageVo.no - 1}">◀</a></li>
 						</c:if>
 
 						<c:forEach var="i" begin="${pageVo.begin }" end="${pageVo.end }" step="1">
@@ -94,16 +94,13 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 									<li class="selected">${i }</li>
 								</c:when>
 								<c:when test='${i != pageVo.no && i <= pageVo.size}'>
-									<li><a href="${pageContext.request.contextPath }/board?a=list&&page=${i }">${i }</a></li>
+									<li><a href="${pageContext.request.contextPath }/board/list?page=${i }">${i }</a></li>
 								</c:when>
 							</c:choose>
-							
-							
-							
 						</c:forEach>
 
 						<c:if test="${pageVo.no < pageVo.size }">
-							<li><a href="${pageContext.request.contextPath }/board?a=list&&page=${pageVo.no + 1}">▶</a></li>
+							<li><a href="${pageContext.request.contextPath }/board/list?page=${pageVo.no + 1}">▶</a></li>
 						</c:if>
 
 					</ul>
@@ -113,7 +110,7 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 				if (authUser != null) {
 				%>
 				<div class="bottom">
-					<a href="${pageContext.request.contextPath }/board?a=write"
+					<a href="${pageContext.request.contextPath }/board/write"
 						id="new-book">글쓰기</a>
 				</div>
 				<%
