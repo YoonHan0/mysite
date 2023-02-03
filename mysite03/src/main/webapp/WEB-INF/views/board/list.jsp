@@ -25,22 +25,23 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 					<input type='hidden' name="page" value="1">		<!-- 검색한 리스트의 1번 페이지로 -->
 					<input type="submit" value="찾기">
 				</form>
+				
 				<table class="tbl-ex">
-					<tr>
-						<th>번호</th>
-						<th>제목</th>
-						<th>글쓴이</th>
-						<th>조회수</th>
-						<th>작성일</th>
-						<th>&nbsp;</th>
-					</tr>
-					<ul>
-						<c:choose>
-							<c:when test='${empty list }'>
-								<td style='text-align: center'>비어있는 리스트</td>
-							</c:when>
-
-							<c:otherwise>
+					<c:choose>
+						<c:when test='${empty list }'>
+							<td style='text-align: center'>비어있는 리스트</td>
+						</c:when>
+						
+						<c:otherwise>
+							<tr>
+								<th>번호</th>
+								<th>제목</th>
+								<th>글쓴이</th>
+								<th>조회수</th>
+								<th>작성일</th>
+								<th>&nbsp;</th>
+							</tr>
+							<ul>
 								<c:set var="count" value="${fn:length(list) }" />
 								<c:forEach items="${list }" var="vo" varStatus="status">
 									<c:if test='${count - 5 * (pageVo.no - 1) >= (count - status.index) && count - 5 * pageVo.no + 1 <= (count - status.index)}'>
@@ -76,10 +77,9 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 										</tr>
 									</c:if>
 								</c:forEach>
-							</c:otherwise>
-						</c:choose>
-
-					</ul>
+							</ul>
+						</c:otherwise>
+					</c:choose>
 				</table>
 
 				<!-- pager 추가 -->
