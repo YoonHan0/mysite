@@ -10,20 +10,27 @@ public class BoardVo {
 	private int g_no;
 	private int o_no;
 	private int depth;
-	private int userNo;
+	private Long userNo;
 	private String userName;
+	private String kwd;
 	
+	public String getKwd() {
+		return kwd;
+	}
+	public void setKwd(String kwd) {
+		this.kwd = kwd;
+	}
 	public String getUserName() {
 		return userName;
 	}
 	public void setUserName(String userName) {
 		this.userName = userName;
 	}
-	public int getUserNo() {
+	public Long getUserNo() {
 		return userNo;
 	}
-	public void setUserNo(int userNo) {
-		this.userNo = userNo;
+	public void setUserNo(Long no) {
+		this.userNo = no;
 	}
 	public int getNo() {
 		return no;
@@ -75,11 +82,12 @@ public class BoardVo {
 	public void setDepth(int depth) {
 		this.depth = depth;
 	}
-	
 	@Override
 	public String toString() {
-		return "BoardVo [no=" + no + ", title=" + title + ", content=" + contents + ", hit=" + hit + ", reg_date="
+		return "BoardVo [no=" + no + ", title=" + title + ", contents=" + contents + ", hit=" + hit + ", regDate="
 				+ regDate + ", g_no=" + g_no + ", o_no=" + o_no + ", depth=" + depth + ", userNo=" + userNo
-				+ ", userName=" + userName + "]";
+				+ ", userName=" + userName + ", kwd=" + kwd + "]";
 	}
+	
+
 }

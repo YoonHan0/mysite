@@ -10,13 +10,11 @@
 <link href="${pageContext.request.contextPath }/assets/css/board.css" rel="stylesheet" type="text/css">
 </head>
 <body>
-	<c:set var="no" value="${no }" />
-	
 	<div id="container">
 			<jsp:include page="/WEB-INF/views/includes/header.jsp" />
 			<div id="content">
 				<div id="board">
-					<form class="board-form" method="post" action="${pageContext.request.contextPath }/board?a=AddBoardAction">
+					<form class="board-form" method="post" action="${pageContext.request.contextPath }/board/reply">	<!-- 여기 수정 -->
 						<input type='hidden' name="no" value="${no}">
 						
 						<table class="tbl-ex">
@@ -29,7 +27,7 @@
 							</tr>
 							<tr>
 								<td class="label">내용</td>
-								<td><textarea id="content" name="reply"></textarea></td>
+								<td><textarea id="contents" name="contents"></textarea></td>
 							</tr>
 						</table>
 						<div class="bottom">

@@ -15,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.GuestbookVo;
+import com.douzone.mysite.vo.PageVo;
 import com.douzone.mysite.vo.UserVo;
 
 @Controller
@@ -24,19 +25,26 @@ public class BoardController {
 	@Autowired
 	private BoardService boardService;
 	
-	@RequestMapping("")
+	@RequestMapping(value = "", method=RequestMethod.GET)
 	public String index(Model model, int page) {
-		System.out.println("메인페이지입니다!");
-		
+		System.out.println("메인페이지!");
 		Map<String, Object> map = boardService.getContetsList(page);
 		
 		model.addAttribute("list", map.get("list"));	// map -> model로 풀어주는 방법 / pageVo, list
 		model.addAttribute("pageVo", map.get("pageVo"));
-		
-		System.out.println("======== "+ map.get("pageVo"));
-		
+				
 		return "board/list";	// UserVo(vo), List형태로 담긴 UserVo = list, pageVo
 	}
+	
+//	@RequestMapping(value = "", method=RequestMethod.POST)
+//	public String index(BoardVo vo, PageVo pagevo, Model model) {		// 키워드, 페이지 넘버
+//		System.out.println("========== 키워드 검색 후 메인페이지!==========");
+//		
+//		List<BoardVo> list = boardService.getContentsList(pagevo.getNo(), vo.getKwd());
+//		model.addAttribute("list", list);
+//				
+//		return "board/list";
+//	}
 	
 	@RequestMapping(value = "/write", method=RequestMethod.GET)
 	public String wirteform() {		
@@ -53,7 +61,6 @@ public class BoardController {
 	@RequestMapping("/viewpage")		// no, userNo
 	public String viewpage(@RequestParam("no") int no, Model model) {
 		BoardVo vo = boardService.getContents(no);	// DB는 contents이고 Vo는 content임 's' -> vo를 수정했음!
-		System.out.println("viewPage===============: " + vo);
 				
 		model.addAttribute("list", vo);
 		return "board/view";
@@ -61,7 +68,6 @@ public class BoardController {
 	
 	@RequestMapping(value="/update", method=RequestMethod.GET)		// no, userNo
 	public String update(BoardVo vo2, Model model) {
-		System.out.println("update:=============" + vo2.getNo() + " : " + vo2.getUserNo());
 		BoardVo vo = boardService.getContents(vo2.getNo(), vo2.getUserNo());
 		if(vo != null) {
 			model.addAttribute("vo", vo);
@@ -87,6 +93,20 @@ public class BoardController {
 		return "redirect:/board?page=1";
 	}
 	
+	@RequestMapping(value= "/reply", method=RequestMethod.GET)
+	public String reply(Long no, Model model) {
+		model.addAttribute("no", no);
+		return "board/replyform";
+	}
+	
+	@RequestMapping(value= "/reply", method=RequestMethod.POST)
+	public String reply(BoardVo vo, HttpSession session) {		// no, title, contents
+		UserVo authUserVo = (UserVo)session.getAttribute("authUser");
+		boardService.addReply(vo, authUserVo.getNo());
+		
+		return "redirect:/board?page=1";
+	}
+		
 //	
 //	@RequestMapping("/add")
 //	public String add(GuestbookVo vo) {		// name, password, message

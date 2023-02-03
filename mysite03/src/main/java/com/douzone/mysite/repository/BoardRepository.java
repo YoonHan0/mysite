@@ -58,4 +58,17 @@ public class BoardRepository {
 		sqlSession.delete("board.delete", map);
 	}
 
+	public BoardVo findInForReply(BoardVo vo) {
+		return sqlSession.selectOne("board.findInForReply", vo.getNo());
+	}
+
+	public void insertReplt(BoardVo vo) {
+		sqlSession.update("board.updateReply", vo);
+		sqlSession.insert("board.insertReply", vo);
+	}
+
+	public List<BoardVo> findAllbyKeyWord(String keyword) {
+		return sqlSession.selectList("board.findAllbyKeyWord", keyword);
+	}
+
 }

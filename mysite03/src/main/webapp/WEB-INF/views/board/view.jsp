@@ -41,7 +41,7 @@
 				<div class="bottom">
 					<a href="#" onClick="history.go(-1)">글목록</a>
 					<%
-						if(authUser != null) {
+						if(authUser != null) {		// 여기서 vo.userNo랑 authUser.no랑 비교를 하고 싶은데...
 					%>
 						<a href="${pageContext.request.contextPath }/board/update?no=${vo.no }&&userNo=${authUser.no}">글수정</a>
 						<a href="${pageContext.request.contextPath }/board/reply?no=${vo.no }">댓글</a>
