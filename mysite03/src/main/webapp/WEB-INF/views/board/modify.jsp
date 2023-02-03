@@ -9,14 +9,12 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="${pageContext.request.contextPath }/assets/css/board.css" rel="stylesheet" type="text/css">
 </head>
-<body>
-	<c:set var="vo" value="${list }" />
-	
+<body>	
 	<div id="container">
 		<jsp:include page="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board?a=update">
+				<form class="board-form" method="post" action="${pageContext.request.contextPath }/board/update">
 					<input type='hidden' name="no" value="${vo.no }">
 					<table class="tbl-ex">
 						<tr>

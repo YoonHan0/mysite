@@ -49,5 +49,13 @@ public class BoardRepository {
 	public BoardVo getContents(int no) {
 		return sqlSession.selectOne("board.getContents", no);
 	}
+	public void update(BoardVo vo) {
+		sqlSession.update("board.update", vo);
+	}
+
+	public void delete(Long no, Long userNo) {
+		Map<String, Object> map = Map.of("no", no, "userNo", userNo);
+		sqlSession.delete("board.delete", map);
+	}
 
 }

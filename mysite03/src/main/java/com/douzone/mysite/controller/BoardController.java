@@ -64,12 +64,27 @@ public class BoardController {
 		System.out.println("update:=============" + vo2.getNo() + " : " + vo2.getUserNo());
 		BoardVo vo = boardService.getContents(vo2.getNo(), vo2.getUserNo());
 		if(vo != null) {
-			model.addAttribute("list", vo);
+			model.addAttribute("vo", vo);
 			return "board/modify";
 		} else {
-			return "board/list/page=1";
+			return "board?page=1";
 		}
 		
+	}
+	
+	@RequestMapping(value="/update", method=RequestMethod.POST)		
+	public String update(BoardVo vo) {		// no, title, contents
+		
+		boardService.updateContents(vo);
+		
+		return "redirect:/board?page=1";		// update 완료 후 게시판으로 이동!
+	}
+	
+	@RequestMapping("/delete")
+	public String delete(Long no, HttpSession session) {
+		UserVo vo = (UserVo)session.getAttribute("authUser");
+		boardService.deleteContents(no, vo.getNo());
+		return "redirect:/board?page=1";
 	}
 	
 //	

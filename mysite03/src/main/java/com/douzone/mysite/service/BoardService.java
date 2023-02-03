@@ -71,11 +71,11 @@ public class BoardService {
 	}
 	
 	public void updateContents(BoardVo vo) {	// 실제로 update를 작업하는 메소드
-		
+		boardRepository.update(vo);
 	}
 	
 	public void deleteContents(Long no, Long userNo) {	// Delete
-		
+		boardRepository.delete(no, userNo);
 	}
 //	public Map<String, Object> getContentsList(int page, String keyword) {
 //		int toTalCount = boardRepository.getTotalCount(keyword);

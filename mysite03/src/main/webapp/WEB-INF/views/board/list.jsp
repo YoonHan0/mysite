@@ -67,7 +67,7 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 											
 											<td>	
 												<c:if test='${authUser.no == vo.userNo}'>
-													<a href="${pageContext.request.contextPath }/board/delete&&no=${vo.no }"><img
+													<a href="${pageContext.request.contextPath }/board/delete?no=${vo.no }"><img
 															src="${pageContext.request.contextPath }/assets/images/recycle.png"></a>
 												</c:if>
 											</td>
