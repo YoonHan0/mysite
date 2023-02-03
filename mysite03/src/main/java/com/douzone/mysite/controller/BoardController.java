@@ -26,12 +26,14 @@ public class BoardController {
 	private BoardService boardService;
 	
 	@RequestMapping(value = "", method=RequestMethod.GET)
-	public String index(Model model, int page) {
+	public String index(Model model, int page, @RequestParam(value = "kwd", required=false, defaultValue = "") String keyword) {
 		System.out.println("메인페이지!");
-		Map<String, Object> map = boardService.getContetsList(page);
+	
+		Map<String, Object> map = boardService.getContetsList(page, keyword);
 		
 		model.addAttribute("list", map.get("list"));	// map -> model로 풀어주는 방법 / pageVo, list
 		model.addAttribute("pageVo", map.get("pageVo"));
+		model.addAttribute("keyword", keyword);
 				
 		return "board/list";	// UserVo(vo), List형태로 담긴 UserVo = list, pageVo
 	}

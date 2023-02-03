@@ -19,7 +19,7 @@ public class BoardService {
 	@Autowired
 	private BoardRepository boardRepository;
 	
-	public Map<String, Object> getContetsList(int pageNo) {
+	public Map<String, Object> getContetsList(int pageNo, String keyword) {
 		// 현재 페이지 정보를 가지고 begin, end 페이지 계산
 		PageVo vo = new PageVo();
 		int size = 0;
@@ -31,11 +31,18 @@ public class BoardService {
 			endNo = 5;
 		} else {
 			beginNo = 1 + ((pageNo-1)/vo.getW_size()) * vo.getW_size();
-			endNo = 4 + ((pageNo-1)/vo.getW_size()) * vo.getW_size() + 1;
+			endNo = vo.getW_size() + ((pageNo-1)/vo.getW_size()) * vo.getW_size();
 		}
-
 		// 리스트 불러오기
-		List<BoardVo> list = boardRepository.findAll();
+		List<BoardVo> list = null;
+		
+		if(keyword.equals("")) {
+			list = boardRepository.findAll();
+		} else {
+			list = boardRepository.findAllbyKeyWord(keyword);
+		}
+		System.out.println(":-" + keyword + "-:");
+		
 		int totalRows = list.size();		// 총 리스트의 수
 		int temp = totalRows / vo.getAmount();	// amount: Limit = 5 리스트의 출력 수
 		int temp2 = totalRows % vo.getAmount();

@@ -50,17 +50,52 @@ INSERT INTO board VALUES(null, "테스트 제목2", "테스트 내용2", 0, now(
 
 INSERT INTO board VALUES(null, "테스트 댓글1", "테스트 댓글 내용1", 0, now(), 1, 1, 0, 1);
 
-SELECT a.g_no, a.o_no, a.depth, b.no
+SELECT *
 FROM board a JOIN user b ON a.user_no = b.no
-WHERE a.no = 1;
+LIMIT 0, 5;
+
 
 SELECT *
 FROM board;
 
-
+DESC user;
 UPDATE board
 SET o_no = o_no + 1
 WHERE g_no = 4 AND o_no > 1;
 
+SELECT count(no)
+FROM board;
+SELECT *
+FROM board;
+SELECT *
+FROM user;
+SELECT *
+FROM guestbook;
+SELECT *
+FROM user;
+
+SELECT a.no, a.title, b.name, a.hit, a.reg_date, a.user_no, a.o_no, a.depth
+			FROM board a JOIN user b ON a.user_no = b.no
+			ORDER BY a.g_no DESC, a.o_no ASC;
+
+SELECT title, contents, user_no 
+FROM board
+WHERE no = 2;
+
+SELECT no, title, contents, user_no AS userNo
+			FROM board
+			WHERE no = 2;
 
 
+
+SELECT *
+FROM user;
+
+SELECT *
+FROM board
+WHERE g_no = 30;
+
+SELECT title, u.name, hit, reg_date
+FROM board b JOIN user u ON b.user_no = u.no
+WHERE title
+LIKE '%제목30%';

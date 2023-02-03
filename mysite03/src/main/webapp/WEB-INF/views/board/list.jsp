@@ -20,9 +20,9 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 		<c:import url="/WEB-INF/views/includes/header.jsp" />
 		<div id="content">
 			<div id="board">
-				<form id="search_form" action="${pageContext.request.contextPath }/board?page=${pageVo.no}" method="post">
-					<input type="text" id="kwd" name="kwd" value="">
-					<input type='hidden' name="no" value="${pageVo.no}">
+				<form id="search_form" action="${pageContext.request.contextPath }/board" method="get">
+					<input type="text" id="kwd" name="kwd" value="${keyword }">
+					<input type='hidden' name="page" value="1">		<!-- 검색한 리스트의 1번 페이지로 -->
 					<input type="submit" value="찾기">
 				</form>
 				<table class="tbl-ex">
@@ -37,7 +37,7 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 					<ul>
 						<c:choose>
 							<c:when test='${empty list }'>
-								<td><p style='text-align: center'>비어있는 리스트</p></td>
+								<td style='text-align: center'>비어있는 리스트</td>
 							</c:when>
 
 							<c:otherwise>
@@ -86,7 +86,7 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 				<div class="pager">
 					<ul>
 						<c:if test="${pageVo.no != 1 }">
-							<li><a href="${pageContext.request.contextPath }/board?page=${pageVo.no - 1}">◀</a></li>
+							<li><a href="${pageContext.request.contextPath }/board?keyword=${keyword }&page=${pageVo.no - 1}">◀</a></li>
 						</c:if>
 
 						<c:forEach var="i" begin="${pageVo.begin }" end="${pageVo.end }" step="1">
@@ -96,13 +96,13 @@ UserVo authUser = (UserVo) session.getAttribute("authUser");
 									<li class="selected">${i }</li>
 								</c:when>
 								<c:when test='${i != pageVo.no && i <= pageVo.size}'>
-									<li><a href="${pageContext.request.contextPath }/board?page=${i }">${i }</a></li>
+									<li><a href="${pageContext.request.contextPath }/board?keyword=${keyword }&page=${i }">${i }</a></li>
 								</c:when>
 							</c:choose>
 						</c:forEach>
 
 						<c:if test="${pageVo.no < pageVo.size }">
-							<li><a href="${pageContext.request.contextPath }/board?page=${pageVo.no + 1}">▶</a></li>
+							<li><a href="${pageContext.request.contextPath }/board?keyword=${keyword }&page=${pageVo.no + 1}">▶</a></li>
 						</c:if>
 
 					</ul>

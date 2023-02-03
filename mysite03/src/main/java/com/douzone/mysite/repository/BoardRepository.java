@@ -20,14 +20,14 @@ public class BoardRepository {
 	@Autowired
 	private SqlSession sqlSession;
 	
-	public List<BoardVo> findAllByPageAndKeyWord(int page, String keyword, int size){
-		Map<String, Object> map = new HashMap();
-		map.put("page", page);
-		map.put("size", size);
-		map.put("keyword", keyword);
-		
-		return sqlSession.selectOne("board.findAllByPageAndKeyWord", map);
-	}
+//	public List<BoardVo> findAllByPageAndKeyWord(int page, String keyword, int size){
+//		Map<String, Object> map = new HashMap();
+//		map.put("page", page);
+//		map.put("size", size);
+//		map.put("keyword", keyword);
+//		
+//		return sqlSession.selectOne("board.findAllByPageAndKeyWord", map);
+//	}
 
 	public int getTotalCount(String keyword) {
 		sqlSession.selectOne("board.getTota", keyword);
