@@ -38,6 +38,10 @@ public class BoardRepository {
 	public List<BoardVo> findAll() {
 		return sqlSession.selectList("board.findAll");
 	}
+	
+	public List<BoardVo> findAllbyKeyWord(String keyword) {
+		return sqlSession.selectList("board.findAllbyKeyWord", keyword);
+	}
 
 	public void insert(BoardVo vo) {
 		sqlSession.insert("board.insert", vo);
@@ -67,8 +71,6 @@ public class BoardRepository {
 		sqlSession.insert("board.insertReply", vo);
 	}
 
-	public List<BoardVo> findAllbyKeyWord(String keyword) {
-		return sqlSession.selectList("board.findAllbyKeyWord", keyword);
-	}
+
 
 }
