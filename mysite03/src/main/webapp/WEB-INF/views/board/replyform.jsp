@@ -27,12 +27,12 @@
 							</tr>
 							<tr>
 								<td class="label">내용</td>
-								<td><textarea id="contents" name="contents"></textarea></td>
+								<td><textarea id="contents" name="contents" style="resize: none; width: 100%; overflow:visible; height: 100px;"></textarea></td>
 							</tr>
 						</table>
 						<div class="bottom">
 							<input type="submit" value="입력">
-							<a href="${pageContext.request.contextPath }/board">뒤로가기</a>
+							<a href="#" onClick="history.go(-1)">뒤로가기</a>
 						</div>
 					</form>
 				</div>
