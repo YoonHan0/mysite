@@ -5,6 +5,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 
 import org.springframework.web.method.HandlerMethod;
+import org.springframework.web.method.HandlerTypePredicate;
 import org.springframework.web.servlet.HandlerInterceptor;
 
 import com.douzone.mysite.vo.UserVo;
@@ -25,17 +26,17 @@ public class AuthInterceptor implements HandlerInterceptor {
 		
 		//3. Hanlder Method의 @Auth 가져오기
 		Auth auth = handlerMethod.getMethodAnnotation(Auth.class);
-		
-		
+
 		// 4. Hanlder Method에 @Auth가 없으면 Type(class)에 붙어 있는지 확인 -> TEST : 로그인을 하지 않고 admin페이지에 들어갈 수 없게 됨
+		// Auth adminRole = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Auth.class);
+		if(auth == null) {
+			auth = handlerMethod.getBeanType().getAnnotation(Auth.class);
+		}
 		
-		
-		// 5. Type이나 Method에 @Authrk djqtsms ruddn
+		// 5. Type이나 Method에 @Auth가 없는 경우 
 		if(auth == null) {
 			return true;
 		}
-//		System.out.println(auth.role());	// 이렇게 확인도 가능하다!
-//		System.out.println(auth.test());
 		
 		//6. @Auth가 붙어 있기 때문에 인증(Authenfication) 여부 확인
 		HttpSession session = request.getSession();
@@ -50,8 +51,16 @@ public class AuthInterceptor implements HandlerInterceptor {
 		String role = auth.role();	// 이렇게 하면 접속한 계정의 역할이 알아서 담길거고
 		String authUserRole = authUser.getRole();	// 이거는 디비에 넣어서 vo에도 담고 해야할 거 같은데
 		
+		if(role.equals("USER")) {
+			return true;
+		}
+		else if(role.equals("ADMIN") && role.equals(authUserRole)) {	// Type이 ADMIN이고 로그인한 사용자의 role 역시 ADMIN일 때!
+			return true;
+		}
+		
 		//6. 인증 확인
-		return true;
+		response.sendRedirect(request.getContextPath() + "/");	// 아니면 홈으로
+		return false;
 	}
 
 }
