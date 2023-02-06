@@ -11,6 +11,8 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
+import com.douzone.mysite.security.Auth;
+import com.douzone.mysite.security.AuthUser;
 import com.douzone.mysite.service.UserService;
 import com.douzone.mysite.vo.UserVo;
 
@@ -46,35 +48,20 @@ public class UserController {
 		return "user/joinsuccess";
 	}
 
-	@RequestMapping(value="/login", method=RequestMethod.GET)
+	@RequestMapping(value="/login")
 	public String login() {
 		return "user/login";
 	}
 	
-	@RequestMapping(value="/login", method=RequestMethod.POST)
-	public String login(HttpSession session, UserVo vo, Model model) {
-		UserVo authUser = userService.getUser(vo);
-		
-		if(authUser == null) {
-			model.addAttribute("email", vo.getEmail());
-			return "user/login";
-		}
-		
-		session.setAttribute("authUser", authUser);
-		
-		return "redirect:/";
-	}
-	
+//	@RequestMapping(value="/login", method=RequestMethod.POST)
+//	public String login(HttpSession session, UserVo vo, Model model) {
+//		
+//		
+//		return "redirect:/";
+//	}
+	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.GET)
-	public String update(HttpSession session, Model model) {
-		
-		// Access Control
-		UserVo authUser = (UserVo)session.getAttribute("authUser"); // authUser로 mapping된 session을 get해서
-		if(authUser == null) {										// 로그인된 상태에서 들어왔는지 확인
-			return "redirect:/";
-		}
-		//////////////////////////////////////////////////
-		
+	public String update(@AuthUser UserVo authUser, Model model) {
 		
 		UserVo vo = userService.getUserByNo(authUser.getNo());
 		
@@ -82,13 +69,14 @@ public class UserController {
 		return "user/update";
 	}
 	
+	@Auth
 	@RequestMapping(value="/update", method=RequestMethod.POST)
-	public String update(HttpSession session, Model model, UserVo vo) {	//name, email, password, gender
-		// Access Control
-		UserVo authUser = (UserVo) session.getAttribute("authUser");
-		if(authUser == null) {
-			return "redirect:/";
-		}
+	public String update(Model model, @AuthUser UserVo authUser, UserVo vo) {	//name, email, password, gender
+//		// Access Control
+//		UserVo authUser = (UserVo) session.getAttribute("authUser");
+//		if(authUser == null) {
+//			return "redirect:/";
+//		}
 		///////////////////////////////////////////////////
 		vo.setNo(authUser.getNo());
 		userService.updateUser(vo);
@@ -99,12 +87,12 @@ public class UserController {
 		return "redirect:/user/update";
 	}
 
-	@RequestMapping("/logout")
-	public String logout(HttpSession session) {
-		session.removeAttribute("authUser");
-		session.invalidate();
-		
-		return "redirect:/";
-	}
+//	@RequestMapping("/logout")
+//	public String logout(HttpSession session) {
+//		session.removeAttribute("authUser");
+//		session.invalidate();
+//		
+//		return "redirect:/";
+//	}
 	
 }
