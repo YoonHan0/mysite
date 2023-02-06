@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 
+import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.service.BoardService;
 import com.douzone.mysite.vo.BoardVo;
 import com.douzone.mysite.vo.GuestbookVo;
@@ -48,6 +49,7 @@ public class BoardController {
 //		return "board/list";
 //	}
 	
+	@Auth
 	@RequestMapping(value = "/write", method=RequestMethod.GET)
 	public String wirteform() {		
 		return "board/write";	// redirect로 수정해야하나?
