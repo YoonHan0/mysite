@@ -55,6 +55,7 @@ public class BoardController {
 		return "board/write";	// redirect로 수정해야하나?
 	}
 	
+	@Auth
 	@RequestMapping(value = "/write", method=RequestMethod.POST)
 	public String write(BoardVo vo) {		// <!-- userNo(=no), title, content,  -->
 		

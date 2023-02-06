@@ -22,9 +22,11 @@ public class LoginInterceptor implements HandlerInterceptor {
 		String email = request.getParameter("email");
 		String password = request.getParameter("password");
 		
+		
 		UserVo vo = new UserVo();
 		vo.setEmail(email);
 		vo.setPassword(password);
+
 		
 		UserVo authUser = userService.getUser(vo);		// 이렇게 new 를 쓰면 container안의 UserService가 아닌 밖의 새로운 객체를 만들어서 null인 상태로 접근하게 된다!
 
@@ -38,6 +40,8 @@ public class LoginInterceptor implements HandlerInterceptor {
 		}
 		HttpSession session = request.getSession(true);
 		session.setAttribute("authUser", authUser);
+		
+		System.out.println(authUser);
 		
 		response.sendRedirect(request.getContextPath());
 		

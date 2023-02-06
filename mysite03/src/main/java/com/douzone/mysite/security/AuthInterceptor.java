@@ -26,14 +26,18 @@ public class AuthInterceptor implements HandlerInterceptor {
 		//3. Hanlder Method의 @Auth 가져오기
 		Auth auth = handlerMethod.getMethodAnnotation(Auth.class);
 		
-		//4. @Auth 가 안되어 있는 경우
+		
+		// 4. Hanlder Method에 @Auth가 없으면 Type(class)에 붙어 있는지 확인 -> TEST : 로그인을 하지 않고 admin페이지에 들어갈 수 없게 됨
+		
+		
+		// 5. Type이나 Method에 @Authrk djqtsms ruddn
 		if(auth == null) {
 			return true;
 		}
-//		System.out.println(auth.role());
+//		System.out.println(auth.role());	// 이렇게 확인도 가능하다!
 //		System.out.println(auth.test());
 		
-		//5. @Auth가 붙어 있기 때문에 인증(Authenfication) 여부 확인
+		//6. @Auth가 붙어 있기 때문에 인증(Authenfication) 여부 확인
 		HttpSession session = request.getSession();
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		
@@ -41,6 +45,10 @@ public class AuthInterceptor implements HandlerInterceptor {
 			response.sendRedirect(request.getContextPath() + "/user/login");
 			return false;
 		}
+		
+		// 7. 권한(Authorization) 체크를 위해 @Auth의 role 가져오기("ADMIN", "USER")
+		String role = auth.role();	// 이렇게 하면 접속한 계정의 역할이 알아서 담길거고
+		String authUserRole = authUser.getRole();	// 이거는 디비에 넣어서 vo에도 담고 해야할 거 같은데
 		
 		//6. 인증 확인
 		return true;
