@@ -95,7 +95,35 @@ SELECT *
 FROM board
 WHERE g_no = 30;
 
-SELECT title, u.name, hit, reg_date
+SELECT b.title, u.name, b.hit, b.reg_date
 FROM board b JOIN user u ON b.user_no = u.no
 WHERE title
 LIKE '%제목30%';
+
+
+SELECT a.no, a.title, b.name, a.hit, a.reg_date, a.user_no, a.o_no, a.depth
+			FROM board a JOIN user b ON a.user_no = b.no
+			WHERE title LIKE '%제목30%'
+			ORDER BY a.g_no DESC, a.o_no ASC;
+            
+            
+			SELECT a.no, a.title, b.name, a.hit, a.reg_date, a.user_no, a.o_no, a.depth
+			FROM board a JOIN user b ON a.user_no = b.no
+			WHERE a.title LIKE '%제목30%'
+			ORDER BY a.g_no DESC, a.o_no ASC;
+            
+
+DESC user;
+ALTER TABLE user ADD COLUMN role enum("ADMIN", "USER") default "USER" after gender;
+SELECT * FROM user;
+
+INSERT INTO user VALUES(null, '관리자', 'admin@test.com', password('1234'), 'male', 'admin', now());
+
+DESC site;
+
+INSERT INTO site VALUES('Mysite', '안녕하세요. 윤한영의 mysite에 오신 것을 환영합니다.', '/assets/images/profil_img.jpeg', password('1234'), null);
+
+
+
+
+
