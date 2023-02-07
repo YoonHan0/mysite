@@ -31,7 +31,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 		// Auth adminRole = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Auth.class);
 		if(auth == null) {
 			auth = handlerMethod.getBeanType().getAnnotation(Auth.class);
+			System.out.println("==========getBeanType() :  " + auth);
 		}
+		
 		
 		// 5. Type이나 Method에 @Auth가 없는 경우 
 		if(auth == null) {
