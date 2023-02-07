@@ -80,7 +80,22 @@
 			<value>messages/messages_en</value>
 	      </list>
 	   </property>
-	</bean>				
+	</bean>		
+	
+	<!-- Multipart Resolver -->
+	<bean id="multipartResolver" class="org.springframework.web.multipart.commons.CommonsMultipartResolver">
+		<!-- 최대업로드 가능한 바이트크기 -->
+		<property name="maxUploadSize" value="52428800" />
+		<!-- 디스크에 임시 파일을 생성하기 전에 메모리에 보관할수있는 최대 바이트 크기 -->
+		<property name="maxInMemorySize" value="52428800" />
+		<!-- defaultEncoding -->
+		<property name="defaultEncoding" value="utf-8" />
+	</bean>
+	
+	<!--  mvc url-resource mapping : images로 들어오는 경로를 실제 경로로 연결(가상 URL) -->
+	<!-- /images/202302071405.png -> Users/yoon/fileupload-files/202302071405.png 이렇게 매핑되게 설정하고 코딩해야함-->
+	<mvc:resources mapping="/assets/upload-images/**" location="file:/Users/yoon/mysite-uploads/"></mvc:resources>
+			
 
 	<context:annotation-config />
 	<context:component-scan base-package="com.douzone.mysite.controller" />

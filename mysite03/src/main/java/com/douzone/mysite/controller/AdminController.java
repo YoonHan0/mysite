@@ -31,7 +31,8 @@ public class AdminController {
 	
 	@RequestMapping("main/update")
 	public String update(SiteVo vo) {		// title, welcome, profile, description 데이터 받아와야 함
-		siteService.updateSite(vo);			// 이제 update 가즈아
+		
+		// siteService.updateSite(vo);			// 이제 update 가즈아
 		
 		// 여기서 변경된 vo값들을 servletContext에 다시 set해줘야 title이 다 변경됨
 		return "redirect:/admin";
