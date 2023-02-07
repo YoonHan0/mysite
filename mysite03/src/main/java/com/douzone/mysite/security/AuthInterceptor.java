@@ -1,5 +1,6 @@
 package com.douzone.mysite.security;
 
+import javax.servlet.ServletContext;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -18,6 +19,8 @@ public class AuthInterceptor implements HandlerInterceptor {
 
 	@Autowired
 	private SiteService siteService;		// Session에 정보를 담기 위해서 정보를 가져오기 위한 Service
+	@Autowired
+	private ServletContext servletContext;
 	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
@@ -41,13 +44,14 @@ public class AuthInterceptor implements HandlerInterceptor {
 		}
 		
 		// ======= 안되지만 Session에 담아서 보내보자 =======
-		SiteVo vo = siteService.getSite();
-		HttpSession sessionSite = request.getSession(true);
+		SiteVo vo = siteService.getSite();			// 필요한 값 불러옴 title, welcome, description
+		servletContext = request.getServletContext();	// ServletContext() 사용할 수 있게 
+		
 		
 		
 		// 5. Type이나 Method에 @Auth가 없는 경우 
 		if(auth == null) {
-			sessionSite.setAttribute("siteTitle", vo.getTitle());			// 이렇게하면 로그인 하자마자 바로 Session에 title이 담기지 않을까
+			servletContext.setAttribute("siteTitle", vo.getTitle());		//Context단에 set하기
 			return true;
 		}
 		
@@ -65,9 +69,6 @@ public class AuthInterceptor implements HandlerInterceptor {
 		String authUserRole = authUser.getRole();	// 이거는 디비에 넣어서 vo에도 담고 해야할 거 같은데
 		
 		if(role.equals("USER")) {
-//			SiteVo vo = siteService.getSite();
-//			request.setAttribute("title", vo.getTitle());
-			
 			return true;
 		}
 //		else if(role.equals("ADMIN") && role.equals(authUserRole)) {	// Type이 ADMIN이고 로그인한 사용자의 role 역시 ADMIN일 때!
@@ -75,7 +76,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 //		}	// 아래랑 같은 코드, 컴퓨팅적 사고로 아래처럼 작성(아닌 것을 먼저 처리)
 		// 9. @Auth
 		if(!"ADMIN".equals(authUser.getRole())) {
-			response.sendRedirect(request.getContextPath());	// 아니면 홈으로
+			response.sendRedirect(request.getContextPath());	// 로그인하고 admin 접속 시도 했는데 ADMIN 아니면 홈으로
 		}
 		
 		// ADMIN 페이지로 이동하는 경우 ->
