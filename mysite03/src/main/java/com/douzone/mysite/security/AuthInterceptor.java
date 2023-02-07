@@ -28,10 +28,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 		Auth auth = handlerMethod.getMethodAnnotation(Auth.class);
 
 		// 4. Hanlder Method에 @Auth가 없으면 Type(class)에 붙어 있는지 확인 -> TEST : 로그인을 하지 않고 admin페이지에 들어갈 수 없게 됨
-		// Auth adminRole = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Auth.class);
 		if(auth == null) {
-			auth = handlerMethod.getBeanType().getAnnotation(Auth.class);
-			System.out.println("==========getBeanType() :  " + auth);
+//			auth = handlerMethod.getBeanType().getAnnotation(Auth.class);
+			auth = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Auth.class);
 		}
 		
 		
@@ -44,7 +43,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 		HttpSession session = request.getSession();
 		UserVo authUser = (UserVo)session.getAttribute("authUser");
 		
-		if(authUser == null) {
+		if(authUser == null) {	// 로그인을 안 하고 admin에 접근할 때
 			response.sendRedirect(request.getContextPath() + "/user/login");
 			return false;
 		}
@@ -56,13 +55,15 @@ public class AuthInterceptor implements HandlerInterceptor {
 		if(role.equals("USER")) {
 			return true;
 		}
-		else if(role.equals("ADMIN") && role.equals(authUserRole)) {	// Type이 ADMIN이고 로그인한 사용자의 role 역시 ADMIN일 때!
-			return true;
+//		else if(role.equals("ADMIN") && role.equals(authUserRole)) {	// Type이 ADMIN이고 로그인한 사용자의 role 역시 ADMIN일 때!
+//			return true;
+//		}	// 아래랑 같은 코드, 컴퓨팅적 사고로 아래처럼 작성(아닌 것을 먼저 처리)
+		// 9. @Auth
+		if(!"ADMIN".equals(authUser.getRole())) {
+			response.sendRedirect(request.getContextPath());	// 아니면 홈으로
 		}
 		
-		//6. 인증 확인
-		response.sendRedirect(request.getContextPath() + "/");	// 아니면 홈으로
-		return false;
+		return true;
 	}
 
 }
