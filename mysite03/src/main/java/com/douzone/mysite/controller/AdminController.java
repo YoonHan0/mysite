@@ -35,6 +35,7 @@ public class AdminController {
 		// siteService.updateSite(vo);			// 이제 update 가즈아
 		
 		// 여기서 변경된 vo값들을 servletContext에 다시 set해줘야 title이 다 변경됨
+		
 		return "redirect:/admin";
 	}
 	

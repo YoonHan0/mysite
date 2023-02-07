@@ -3,15 +3,22 @@ package com.douzone.mysite.security;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import javax.servlet.jsp.PageContext;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.method.HandlerMethod;
 import org.springframework.web.method.HandlerTypePredicate;
 import org.springframework.web.servlet.HandlerInterceptor;
 
+import com.douzone.mysite.service.SiteService;
+import com.douzone.mysite.vo.SiteVo;
 import com.douzone.mysite.vo.UserVo;
 
 public class AuthInterceptor implements HandlerInterceptor {
 
+	@Autowired
+	private SiteService siteService;		// Session에 정보를 담기 위해서 정보를 가져오기 위한 Service
+	
 	@Override
 	public boolean preHandle(HttpServletRequest request, HttpServletResponse response, Object handler)
 			throws Exception {
@@ -33,9 +40,14 @@ public class AuthInterceptor implements HandlerInterceptor {
 			auth = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Auth.class);
 		}
 		
+		// ======= 안되지만 Session에 담아서 보내보자 =======
+		SiteVo vo = siteService.getSite();
+		HttpSession sessionSite = request.getSession(true);
+		
 		
 		// 5. Type이나 Method에 @Auth가 없는 경우 
 		if(auth == null) {
+			sessionSite.setAttribute("siteTitle", vo.getTitle());			// 이렇게하면 로그인 하자마자 바로 Session에 title이 담기지 않을까
 			return true;
 		}
 		
@@ -53,6 +65,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 		String authUserRole = authUser.getRole();	// 이거는 디비에 넣어서 vo에도 담고 해야할 거 같은데
 		
 		if(role.equals("USER")) {
+//			SiteVo vo = siteService.getSite();
+//			request.setAttribute("title", vo.getTitle());
+			
 			return true;
 		}
 //		else if(role.equals("ADMIN") && role.equals(authUserRole)) {	// Type이 ADMIN이고 로그인한 사용자의 role 역시 ADMIN일 때!
@@ -62,6 +77,9 @@ public class AuthInterceptor implements HandlerInterceptor {
 		if(!"ADMIN".equals(authUser.getRole())) {
 			response.sendRedirect(request.getContextPath());	// 아니면 홈으로
 		}
+		
+		// ADMIN 페이지로 이동하는 경우 ->
+		
 		
 		return true;
 	}
