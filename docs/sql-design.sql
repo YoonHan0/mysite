@@ -121,9 +121,33 @@ INSERT INTO user VALUES(null, '관리자', 'admin@test.com', password('1234'), '
 
 DESC site;
 
-INSERT INTO site VALUES('Mysite', '안녕하세요. 윤한영의 mysite에 오신 것을 환영합니다.', '/assets/images/profil_img.jpeg', password('1234'), null);
+INSERT INTO site VALUES('Mysite', '안녕하세요. 윤한영의 mysite에 오신 것을 환영합니다.', '/assets/images/profil_img.jpeg', '이 사이트는  웹 프로그램밍 실습과제 예제 사이트입니다.\n메뉴는 사이트 소개, 방명록, 게시판이 있구요. Java 수업 + 데이터베이스 수업 + 웹 프로그래밍 수\n업 배운 거 있는거 없는 거 다 합쳐서 만들어 놓은 사이트 입니다.', null);
+
+SELECT * FROM site;
+
+SELECT title, welcome, profile, description
+FROM site
+ORDER BY no ASC
+LIMIT 0, 1;
 
 
+UPDATE site
+SET title="My Site", welcome = "안녕하세요. 윤한영입니다!", profile =  "", description = "환영합니다!"
+WHERE no = 1;
+
+
+
+DESC site;
+INSERT INTO site VALUES(null, 'Mysite', '안녕하세요. 윤한영의 mysite에 오신 것을 환영합니다.', '/assets/images/profil_img.jpeg', '이 사이트는  웹 프로그램밍 실습과제 예제 사이트입니다.\n메뉴는 사이트 소개, 방명록, 게시판이 있구요. Java 수업 + 데이터베이스 수업 + 웹 프로그래밍 수\n업 배운 거 있는거 없는 거 다 합쳐서 만들어 놓은 사이트 입니다.');
+
+
+DESC gallery;
+SELECT * FROM gallery;
+
+SELECT no, url, comments
+FROM gallery;
+
+INSERT INTO gallery VALUES(null, "/assets/images/profil_img.jpeg", "윤한영입니다!");
 
 
 

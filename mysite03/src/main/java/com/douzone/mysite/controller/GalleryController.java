@@ -9,6 +9,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 
+import com.douzone.mysite.security.Auth;
 import com.douzone.mysite.service.FileuploadService;
 import com.douzone.mysite.service.GalleryService;
 import com.douzone.mysite.vo.GalleryVo;
@@ -31,6 +32,7 @@ public class GalleryController {
 		return "gallery/index";
 	}
 	
+	@Auth(role="ADMIN")
 	@RequestMapping("/upload")
 	public String upload(
 			GalleryVo vo,
@@ -43,6 +45,7 @@ public class GalleryController {
 		return "redirect:/gallery";
 	}
 	
+	@Auth(role="ADMIN")
 	@RequestMapping("/delete")
 	public String delete(Long no) {
 		galleryService.removeImage(no);

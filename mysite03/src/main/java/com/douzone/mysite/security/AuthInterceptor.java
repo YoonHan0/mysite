@@ -49,7 +49,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 		
 		
 		
-		// 5. Type이나 Method에 @Auth가 없는 경우 
+		// 5. Type이나 Method에 @Auth가 없는 경우 -> 권한 제어가 아무것도 없는 경우
 		if(auth == null) {
 			servletContext.setAttribute("siteTitle", vo.getTitle());		//Context단에 set하기
 			return true;
@@ -63,25 +63,24 @@ public class AuthInterceptor implements HandlerInterceptor {
 			response.sendRedirect(request.getContextPath() + "/user/login");
 			return false;
 		}
-		
+		// 로그인은 되어 있다
 		// 7. 권한(Authorization) 체크를 위해 @Auth의 role 가져오기("ADMIN", "USER")
-		String role = auth.role();	// 이렇게 하면 접속한 계정의 역할이 알아서 담길거고
+		String role = auth.role();	// auth의 역할 default값 USER
 		String authUserRole = authUser.getRole();	// 이거는 디비에 넣어서 vo에도 담고 해야할 거 같은데
 		
-		if(role.equals("USER")) {
+		if(role.equals("USER")) {	//@Auth()의 값이 USER이면 로그인 했으니까 그냥 통과
 			return true;
 		}
 //		else if(role.equals("ADMIN") && role.equals(authUserRole)) {	// Type이 ADMIN이고 로그인한 사용자의 role 역시 ADMIN일 때!
 //			return true;
 //		}	// 아래랑 같은 코드, 컴퓨팅적 사고로 아래처럼 작성(아닌 것을 먼저 처리)
 		// 9. @Auth
-		if(!"ADMIN".equals(authUser.getRole())) {
+		if(!"ADMIN".equals(authUser.getRole())) {		// @Auth(role="ADMIN")인데 로그인한 유저의 role이 ADMIN이 아닐 때 홈으로 이동 시킴
 			response.sendRedirect(request.getContextPath());	// 로그인하고 admin 접속 시도 했는데 ADMIN 아니면 홈으로
+			return false;
 		}
 		
-		// ADMIN 페이지로 이동하는 경우 ->
-		
-		
+		// ADMIN인 경우 ->
 		return true;
 	}
 
