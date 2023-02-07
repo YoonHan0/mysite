@@ -16,8 +16,8 @@ public class SiteService {
 		return siteRepository.find();
 	}
 	
-	public SiteVo updateSite(SiteVo vo) {	// 업데이트 하는 부분 -과제
-		return null;
+	public void updateSite(SiteVo vo) {	// 업데이트 하는 부분 -과제	vo: title, welcome, profile, description
+		siteRepository.update(vo);
 	}
 
 }

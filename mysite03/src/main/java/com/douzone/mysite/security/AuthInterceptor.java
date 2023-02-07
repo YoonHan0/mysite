@@ -43,7 +43,7 @@ public class AuthInterceptor implements HandlerInterceptor {
 			auth = handlerMethod.getMethod().getDeclaringClass().getAnnotation(Auth.class);
 		}
 		
-		// ======= 안되지만 Session에 담아서 보내보자 =======
+		/*=========== 그냥 했따 =========== */
 		SiteVo vo = siteService.getSite();			// 필요한 값 불러옴 title, welcome, description
 		servletContext = request.getServletContext();	// ServletContext() 사용할 수 있게 
 		

@@ -26,6 +26,7 @@ public class FileuploadService {
 			}
 			
 			if(file.isEmpty()) {	// 파일이 업로드 되지 않았을 때
+				url = "/assets/upload-images/20231752530972.jpeg";
 				return url;			// null을 리턴
 			}
 			
