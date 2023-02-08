@@ -32,7 +32,6 @@ public class AdminController {
 		SiteVo vo = siteService.getSite();
 		model.addAttribute("siteVo", vo);
 		
-		System.out.println("========== admin: " + vo);
 		return "admin/main";
 	}
 	
@@ -42,13 +41,14 @@ public class AdminController {
 			@RequestParam("file") MultipartFile file) {		// title, welcome, profile, description 데이터 받아와야 함
 		
 		String url = fileuploadService.restore(file);		// 잘 들어감ㅇㅇ
+		
 		vo.setProfile(url);		// url을 담고		
 		siteService.updateSite(vo);			// 이제 update 가즈아
 		
 		SiteVo result = siteService.getSite();	// update하고 select 다시해서 가져옴
 		
 		// 여기서 변경된 vo값들을 servletContext에 다시 set해줘야 title이 다 변경됨
-		servletContext.setAttribute("siteTitle", result.getTitle());
+		servletContext.setAttribute("siteVo", result);
 		return "redirect:/admin";
 	}
 	
