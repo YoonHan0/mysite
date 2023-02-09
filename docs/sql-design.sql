@@ -149,5 +149,9 @@ FROM gallery;
 
 INSERT INTO gallery VALUES(null, "/assets/images/profil_img.jpeg", "윤한영입니다!");
 
+DELETE
+FROM gallery
+WHERE no = 3;
 
 
+SELECT * FROM gallery;
