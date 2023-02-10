@@ -52,6 +52,26 @@ public class AdminController {
 		return "redirect:/admin";
 	}
 	
+//	@RequestMapping("/main/update")	// 강사님 코드
+//	public String update(SiteVo vo, MultipartFile file) {
+//		String profile = fileuploadService.restore(file);
+//		if(profile != null) {
+//			vo.setProfile(profile);
+//		}
+//		
+//		SiteVo site = applicationContext.getBean(SiteVo.class);
+//		
+//		siteService.updateSite(vo);
+//		servletContext.setAttribute("sitevo", vo);
+////		site.setTitle(vo.getTitle());
+////		site.setWelcome(vo.getWelcome());
+////		site.setProfile(vo.getProfile());
+////		site.setDescription(vo.getDescription());
+//		BeanUtils.copyProperties(vo, site);
+//		
+//		return "redirect:/admin";
+//	}
+	
 	@RequestMapping("/guestbook")
 	public String guestbook() {
 		

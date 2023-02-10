@@ -75,10 +75,15 @@
 	<!-- ViewResolver -->
 	<bean id="viewResolver"
 		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
-		<property name="viewClass"
-			value="org.springframework.web.servlet.view.JstlView" />
+		<property name="viewClass" value="org.springframework.web.servlet.view.JstlView" />
 		<property name="prefix" value="/WEB-INF/views/" />
 		<property name="suffix" value=".jsp" />
+		<property name="exposeContextBeansAsAttributes" value="true" />
+		<property name="exposedContextBeanNames">
+			<list>
+				<value>site</value>
+			</list>
+		</property>
 	</bean>
 
 	<!-- Message Source -->
@@ -104,7 +109,9 @@
 	<!--  mvc url-resource mapping : images로 들어오는 경로를 실제 경로로 연결(가상 URL) -->
 	<!-- /images/202302071405.png -> Users/yoon/fileupload-files/202302071405.png 이렇게 매핑되게 설정하고 코딩해야함-->
 	<mvc:resources mapping="/assets/upload-images/**" location="file:/Users/yoon/mysite-uploads/"></mvc:resources>
-			
+	
+	<!-- ApplicationContextEventListener -->
+	<bean class="com.douzone.mysite.event.ApplicationContextEventListener" />
 
 	<context:annotation-config />
 	<context:component-scan base-package="com.douzone.mysite.controller" />
