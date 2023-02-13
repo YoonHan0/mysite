@@ -1,10 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE configuration PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd">
 <configuration>
-
 	<settings>
-	<!-- 프로젝트 컬럼 이름을 언더바 기법에서 카멜 기법으로 자동 변경 -->
-		<setting name="mapUnderscoreToCamelCase" value="false" />
+		<!-- true가 되어있으면, 프로젝션 컬럼 이름의 _ 를 대문자로 자동 변경 -->
+		<setting name="mapUnderscoreToCamelCase" value="false"/>
 	</settings>
 	
 	<typeAliases>
@@ -13,14 +12,13 @@
 		<typeAlias type="com.douzone.mysite.vo.BoardVo" alias="boardvo" />
 		<typeAlias type="com.douzone.mysite.vo.SiteVo" alias="sitevo" />
 		<typeAlias type="com.douzone.mysite.vo.GalleryVo" alias="galleryvo" />
-   	</typeAliases>	
-   	
+    </typeAliases>	
+	
 	<mappers>
-		<mapper resource="mybatis/mappers/user.xml" />
-		<mapper resource="mybatis/mappers/guestbook.xml" />
-		<mapper resource="mybatis/mappers/board.xml" />
-		<mapper resource="mybatis/mappers/site.xml" />
-		<mapper resource="mybatis/mappers/gallery.xml" />
+		<mapper resource="com/douzone/mysite/mybatis/mappers/user.xml" />
+		<mapper resource="com/douzone/mysite/mybatis/mappers/guestbook.xml" />
+		<mapper resource="com/douzone/mysite/mybatis/mappers/board.xml" />
+		<mapper resource="com/douzone/mysite/mybatis/mappers/site.xml" />
+		<mapper resource="com/douzone/mysite/mybatis/mappers/gallery.xml" />
 	</mappers>
 </configuration>
-<!-- settings/setting-nam="mapUnderscoreToCamelCase" : reg_date를 regDate처럼 카멜 형식으로 변경해주는 것 -->
