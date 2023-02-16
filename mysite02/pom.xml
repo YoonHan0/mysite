@@ -3,8 +3,9 @@
 	
 	<groupId>com.douzone</groupId>
 	<artifactId>mysite02</artifactId>
-	<packaging>war</packaging>
 	<version>0.0.1-SNAPSHOT</version>
+	
+	<packaging>war</packaging>
 	
 	<properties>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
@@ -14,6 +15,13 @@
 	</properties>
 	
 	<dependencies>
+		<!-- jstl -->
+		<dependency>
+		    <groupId>jstl</groupId>
+		    <artifactId>jstl</artifactId>
+		    <version>1.2</version>
+		</dependency>
+		
 		<!-- MariaDB JDBC Driver -->
 		<dependency>
 		    <groupId>org.mariadb.jdbc</groupId>
@@ -38,7 +46,6 @@
 	
 	<build>
 		<finalName>mysite02</finalName>
-		
 		<plugins>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
@@ -54,7 +61,6 @@
 					<server>tomcat-douzone2023</server>
 				</configuration>
 			</plugin>
-		</plugins>
-		
+		</plugins>		
 	</build>		
 </project>
