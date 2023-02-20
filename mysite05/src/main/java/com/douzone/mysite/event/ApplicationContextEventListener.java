@@ -16,11 +16,11 @@ public class ApplicationContextEventListener {
 	
 	@Autowired
 	private ApplicationContext applicationContext;
-	
+
 	@EventListener({ContextRefreshedEvent.class})
 	public void handleContextRefreshedEvent() {
 		System.out.println("--- Context Refresh Event Received --- : " + applicationContext);
-	
+		
 		SiteService service = applicationContext.getBean(SiteService.class);
 		SiteVo site = service.getSite();
 		
