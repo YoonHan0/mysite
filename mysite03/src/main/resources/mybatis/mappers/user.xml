@@ -26,6 +26,13 @@
 		]]>
 	</select>
 	
+	<select id="findByEmail" resultType="uservo" parameterType="string">
+		<![CDATA[
+		select no
+		  from user where email=#{email }
+		]]>	   
+	</select>
+	
 	<update id="update" parameterType="uservo"> <!-- 기본 자료형도 Alias가 되어 있음 소문자 Parameter가 값인 경우 의미가 있는 것으로 적어주기-->
 	
 		<choose>
