@@ -9,8 +9,129 @@
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link rel="stylesheet" href="${pageContext.request.contextPath }/assets/css/guestbook-spa.css" rel="stylesheet" type="text/css">
 <link rel="stylesheet" href="https://code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-<script type="text/javascript" src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
+<script src="${pageContext.request.contextPath }/assets/js/jquery/jquery-3.6.0.js"></script>
 <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+<script>
+
+	var render = function(vo, mode) {
+		var htmls = 
+			"<li data-no='" + vo.no + "'>" +
+			"	<strong>" + vo.name + "</strong>" +
+			"	<p>" + vo.message + "</p>" +
+			"	<strong></strong>" +
+			"	<a href='' data-no='" + vo.no + "'>삭제</a>" + 
+			"</li>";
+		
+		$("#list-guestbook")[mode? "prepend" : "append"](htmls);
+	}
+	
+	var fetch = function() {
+		$.ajax({
+			url: "${pageContext.request.contextPath}/guestbook/api?sno=10",
+			type: "get",
+			dataType: "json",
+			success: function(response) { 
+				if(response.result === 'fail') {
+					console.error(response.message);
+					return;
+				}
+				
+				response.data.forEach(function(vo){
+					render(vo);
+				});
+			}
+		});	
+	}
+	
+	$(function() {
+		
+		
+		$('#add-form').submit(function(event) {
+			event.preventDefault();
+			
+			/* validation & messagebox 띄우기 */
+			// form serialization
+			var vo = {};
+			vo.name = $('#input-name').val();
+			vo.password = $('#input-password').val();
+			vo.message = $('#tx-content').val();
+			
+			// OK, this.submit() 대신에 ajax로 통신
+			$.ajax({
+				url: "${pageContext.request.contextPath }/guestbook/api/add",
+				type: "post",
+				dataType: "json",
+				contentType: "application/json",
+				data: JSON.stringify(vo),
+				success: function(response) {
+					// console.log(response);
+					if(response.result === "fail") {
+						console.error(response.error);
+						return;
+					}
+					render(response.data, true);
+				}
+			});
+		});
+		
+		// 삭제 다이알로그 jQuery 객체 미리 만들기
+		var $dialogDelete = $("#dialog-delete-form").dialog({
+			autoOpen: false,
+			modal: true,
+			buttons: {
+				"삭제": function() {
+					console.log("ajax 삭제하기");
+					var $no = $("#hidden-no").val();
+					var $pw = $('#password-delete').val();
+					
+					$.ajax({
+						url: "${pageContext.request.contextPath}/guestbook/api/delete",
+						type: "delete",
+						dataType: "json",
+						data: {
+							no: $no,
+							pw: $pw
+						},
+						success: function(response) { 
+							if(response.result === 'fail') {
+								console.error(response.message);
+								// $('#dialog-delete-form p').css('display', 'block';)
+								return;
+							}
+							console.log("성공이야아아");
+							console.log(vo);
+							response.data.forEach(function(vo){
+								$(this).dialog('close');
+								render(vo);
+							});
+						}
+					});
+					
+					
+				},
+				"취소": function() {
+					console.log("삭제 다이알로그의 폼 데이터 리셋하기");
+					$(this).dialog('close');
+				}
+			}
+		});
+		
+		// 메세지 삭제 버튼 click 이벤트 처리(Live Event)
+		$(document).on('click', "#list-guestbook li a", function(event){
+			event.preventDefault();
+			
+			// console.log($(this).data("no"));
+			($("#hidden-no").val($(this).data("no")));
+			// console.log($("#hidden-no").val());
+			$dialogDelete.dialog('open');
+		}); 
+		
+		// 최초 리스트 출력
+		fetch();
+	});
+	
+
+</script>
 </head>
 <body>
 	<div id="container">
@@ -25,38 +146,7 @@
 					<input type="submit" value="보내기" />
 				</form>
 				<ul id="list-guestbook">
-
-					<li data-no=''>
-						<strong>지나가다가</strong>
-						<p>
-							별루입니다.<br>
-							비번:1234 -,.-
-						</p>
-						<strong></strong>
-						<a href='' data-no=''>삭제</a> 
-					</li>
-					
-					<li data-no=''>
-						<strong>둘리</strong>
-						<p>
-							안녕하세요<br>
-							홈페이지가 개 굿 입니다.
-						</p>
-						<strong></strong>
-						<a href='' data-no=''>삭제</a> 
-					</li>
-
-					<li data-no=''>
-						<strong>주인</strong>
-						<p>
-							아작스 방명록 입니다.<br>
-							테스트~
-						</p>
-						<strong></strong>
-						<a href='' data-no=''>삭제</a> 
-					</li>
-					
-									
+					<!-- 리스트 추가 -->
 				</ul>
 			</div>
 			<div id="dialog-delete-form" title="메세지 삭제" style="display:none">
