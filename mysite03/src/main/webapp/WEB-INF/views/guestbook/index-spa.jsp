@@ -45,6 +45,8 @@
 	
 	$(function() {
 		
+		// 최초 리스트 출력
+		fetch();
 		
 		$('#add-form').submit(function(event) {
 			event.preventDefault();
@@ -70,6 +72,7 @@
 						return;
 					}
 					render(response.data, true);
+					$('#input-name').val(""); $('#input-password').val(""); $('#tx-content').val("");
 				}
 			});
 		});
@@ -83,6 +86,7 @@
 					console.log("ajax 삭제하기");
 					var $no = $("#hidden-no").val();
 					var $pw = $('#password-delete').val();
+					var _this = this;
 					
 					$.ajax({
 						url: "${pageContext.request.contextPath}/guestbook/api/delete",
@@ -97,20 +101,15 @@
 								console.error(response.message);
 								// $('#dialog-delete-form p').css('display', 'block';)
 								return;
-							}
-							console.log("성공이야아아");
-							console.log(vo);
-							response.data.forEach(function(vo){
-								$(this).dialog('close');
-								render(vo);
-							});
+							} 
+							$(_this).dialog('close');
+							fetch();	// 여기서 리스트가 불러와져야함
 						}
 					});
-					
-					
 				},
 				"취소": function() {
 					console.log("삭제 다이알로그의 폼 데이터 리셋하기");
+					$('#password-delete').val("");
 					$(this).dialog('close');
 				}
 			}
@@ -126,8 +125,6 @@
 			$dialogDelete.dialog('open');
 		}); 
 		
-		// 최초 리스트 출력
-		fetch();
 	});
 	
 
