@@ -28,9 +28,9 @@
 	
 	<select id="findByEmail" resultType="uservo" parameterType="string">
 		<![CDATA[
-			select no
-		  	from user 
-		  	where email=#{email }
+			SELECT no
+		  	FROM user 
+		  	WHERE email=#{email }
 		]]>	   
 	</select>
 	

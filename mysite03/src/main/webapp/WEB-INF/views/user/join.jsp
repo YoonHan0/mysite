@@ -55,8 +55,9 @@
 					console.log(status, error);
 				},
 				success: function(response) {
+					console.log(response);
 					if(response.result === 'fail') {
-						console.error(response.message);
+						// console.error(response.message);
 						return;
 					}
 					
