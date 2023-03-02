@@ -50,5 +50,10 @@ public class GuestbookController {
 		return "redirect:/guestbook";		// delete 끗
 	}
 	
+	@RequestMapping("/spa")
+	public String indexSPA() {
+		return "/guestbook/index-spa";
+	}
+	
 	
 }

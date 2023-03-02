@@ -11,29 +11,84 @@
 <title>mysite</title>
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <link href="${pageContext.request.contextPath }/assets/css/user.css" rel="stylesheet" type="text/css">
-<script src="${pageContext.request.contextPath }/assets/js/jquery/jquery-1.9.0.js"></script>
+<link rel="stylesheet" href="//code.jquery.com/ui/1.13.2/themes/base/jquery-ui.css">
+<link rel="stylesheet" href="/resources/demos/style.css">
+<script src="https://code.jquery.com/jquery-3.6.0.js"></script>
+<script src="https://code.jquery.com/ui/1.13.2/jquery-ui.js"></script>
 
 <script>
 
+	var messageBox = function(title, message, callback) {
+		$('#dialog-message p').text(message);
+		$('#dialog-message')
+			.attr("title", title)
+			.dialog({
+				width: 340,
+				height: 170,
+				modal: true,
+				buttons: {
+					"확인": function() {
+						// console.log("function() Click!!!");
+						$(this).dialog('close');
+					}
+				},
+				close: callback
+				/* 이거랑 같음
+					function() {
+					callback && callback();
+				}
+				*/
+			});
+	}
 	
 	$(function(){
 		
 		$("#join-form").submit(function(event){
 			event.preventDefault();
 			
-			var name = $("#name").val();
-			if(name == ''){
-				alert("이름이 비어 있습니다");
-				$("#name").val('').focus();
+			if($("#name").val() == ''){
+				// alert("이름이 비어 있습니다");
+				
+				messageBox("회원가입", "이름이 비어 있습니다.", function() {
+					$("#name").focus();
+				});
+				
 				return;
 			}
 			
+			// 2. 이메일 유효성 체크
+			if($('#email').val() == '') {
+				
+				messageBox("회원가입", "이메일이 비어 있습니다!", function() {
+					$('#email').focus();	
+				});
+				
+				return;
+			}
+			
+			// 3. 이메일 중복 체크 유무
 			if(!$("#img-check").is(":visible")){
-				alert("이메일 중복 확인을 하지 않았습니다.");
+				messageBox("회원가입", "이메일 중복 확인을 하지 않았습니다.");
 				return;
 			}
 			
-			this.submit();
+			// 4. 비밀번호 유효성 체크
+			if($('#password').val() === '') {
+				messageBox("회원가입", "비밀번호가 비어 있습니다.", function() {
+					$('#password').focus();
+				});
+				return;
+			}
+			
+			// 5. 약관 동의 유무
+			if(!$('#agree-prov').is(':checked')) {
+				messageBox("회원가입", "약관을 동의 해주세요.");
+				return;
+			}
+			
+			// 6. ok
+			console.log("OK");
+			// this.submit();
 		});
 		
 		$("#email").change(function(){
@@ -62,8 +117,9 @@
 					}
 					
 					if(response.data) {
-						alert("존재하는 이메일입니다. 다른 이메일을 선택해 주세요.");
-						$("#email").val("").focus();
+						messageBox("회원가입", "존재하는 이메일 입니다.", function() {
+							$('#email').focus();
+						});
 						return;
 					}
 					
@@ -135,6 +191,9 @@
 					
 				</form:form>
 			</div>
+		</div>
+		<div id="dialog-message" title="" style="display: none">
+			<p style="line-height: 60px;"></p>
 		</div>
 		<c:import url="/WEB-INF/views/includes/navigation.jsp" />
 		<c:import url="/WEB-INF/views/includes/footer.jsp" />
