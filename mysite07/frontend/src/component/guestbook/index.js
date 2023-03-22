@@ -46,7 +46,8 @@ export default function Guestbook() {
                 },
                 body: JSON.stringify(message)
             });
-
+            console.log(`넘어온 message: ${message}`);
+            console.log(`response: ${response}`);
             if (!response.ok) {
                 throw new Error(`${response.status} ${response.statusText}`);
             }

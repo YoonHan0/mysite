@@ -24,7 +24,7 @@ export default function Index() {
              if (json.result !== 'success') {
                  throw new Error(`${json.result} ${json.message}`);
              }
- 
+             
              setImageList(json.data);
          } catch (err) {
              console.error(err);

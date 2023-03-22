@@ -35,8 +35,10 @@ public class GuestbookController {
 	}
 
 	@DeleteMapping("/{no}")
-	public ResponseEntity<JsonResult> delete(@PathVariable("no") Long no, @RequestParam(value="password", required=true, defaultValue="") String password) {
-		Boolean result = guestbookService.deleteMessage(no, password);		
+	public ResponseEntity<JsonResult> delete(@PathVariable("no") Long no, @RequestBody GuestbookVo vo) {
+		
+		System.out.println("no: " + no + " password: " + vo);
+		Boolean result = guestbookService.deleteMessage(no, vo.getPassword());		
 		return ResponseEntity.status(HttpStatus.OK).body(JsonResult.success(result ? no : null));
 	}
 }

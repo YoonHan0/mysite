@@ -23,7 +23,8 @@ export default function MessageList({messages, notifyMessage}) {
             if (e.target.password.value === '') {
                 return;
             }
-
+            // console.log(`비밀번호: ${modalData.password}, no: ${modalData.messageNo}`);
+            // console.log(`비밀번호 : ${e.target.password.value}`);
             const response = await fetch(`/api/guestbook/${modalData.messageNo}`, {
                 method: 'delete',
                 headers: {
@@ -49,7 +50,7 @@ export default function MessageList({messages, notifyMessage}) {
                 }));
                 return;
             }
-
+            
             setModalData({isOpen: false, password: ''});
             notifyMessage.delete(json.data);
         } catch (err) {

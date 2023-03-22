@@ -5,10 +5,12 @@ export default function WriteForm({notifyMessage}) {
     const refForm = useRef(null);
 
     const handleSubmit = function (e) {
+        console.log(e);
+        console.log(e.target);
         e.preventDefault();
         try {
-            const newMessage = Array
-                .from(e.target, (input) => {
+            /* input이라는 Parmeter로 e.target애 하나씩 접근 */
+            const newMessage = Array.from(e.target, (input) => {
                     // simple validatation of empty string
                     if (input.value === '') {
                         throw `validation ${input.placeholder} is empty ''`;
@@ -17,10 +19,11 @@ export default function WriteForm({notifyMessage}) {
                 })
                 .filter(({n}) => n !== '')
                 .reduce((res, {n, v}) => {
+                    console.log(`res: ${res}, n: ${n}, v: ${v}`);
                     res[n] = v;
                     return res;
                 }, {});
-
+            console.log(`newMessage: ${newMessage}`);
             refForm.current.reset();
             notifyMessage.add(newMessage);
         } catch (err) {
